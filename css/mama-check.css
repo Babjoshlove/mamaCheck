@@ -1,0 +1,251 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+    /* media for smaller screen */
+@media (max-width: 768px){
+
+    .mama-checkbox2 img{
+        max-width: 100%;
+        height: auto;
+    }
+
+    .reg-container{
+        flex-direction: column;
+        width: 90%;
+        justify-self: center;
+    }
+    .dashboard-stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 2rem;
+    width: 90%;
+    gap: 2rem;
+    }
+
+    .register-mama,
+    .view-dashboard{
+        /* width: 100%; */
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        padding: 1.2rem;
+    }
+    .mama-checkbox3 h2{
+        font-size: 1.1rem;
+    }
+    .registered-num,
+    .due-date,
+    .due-alert{
+        flex-direction: column;
+        padding: 1rem;
+        justify-self: center;   
+    }
+    .register-mama img{
+        height: 3rem;
+    }
+    .view-dashboard img{
+        height: 2rem;
+}
+}
+
+@media (max-width: 576px){
+
+    html{
+        font-size: 55%;
+    }
+    .view-dashboard{
+        border: 1px solid #4E2A8A;
+        width: 20rem;
+    }
+    
+    .mama-checkbox3 h2{
+        font-size:0.8rem ;
+    }
+
+    .mama-checkbox3 h5{
+        font-size: 1rem;
+        text-align: center;
+        padding: 0 1rem;
+    }
+    .dashboard-stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 2rem;
+    width: 90%;
+    gap: 2rem;
+    }
+
+    .register-mama,
+    .view-dashboard{
+        align-items: center;
+        justify-content: center;
+        padding: 1.2rem;
+        display: flex;
+    }
+
+    .registered-num,
+    .due-date,
+    .due-alert{
+        flex-direction: column;
+        padding: 1rem;
+        width: 20rem;
+        justify-self: center;
+    }
+
+    .register-mama img,
+    .view-dashboard img{
+        height: 3rem;  
+    }
+    .register-mama img{
+    height: 3rem;
+    }
+    .view-dashboard img{
+    height: 2rem;
+    }
+}
+
+.check{
+    color: Indigo;
+    /* font-size: 2rem; */
+}
+.mama-checkbox3 h5{
+    font-size: 2rem;
+    text-align: center;
+    padding: 0 1rem;
+    justify-self: center;
+    color: #8D81A1;
+    font-family: 'Roboto', sans-serif;
+}
+.mama-checkbox3 h2{
+    align-self: center;
+    font-size: 3rem;
+}
+.mama-checkbox1 h1{
+    font-size: 3rem;
+}
+body{
+    font-family:'Montserrat', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+html{
+    font-size: 62.5%;
+}
+.mama-check-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mama-checkbox1,
+.mama-checkbox2,
+.mama-checkbox3{
+    display: flex;
+    flex-direction: column;
+
+}
+.mama-checkbox1 img{
+    height: 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+}
+/* dashboard and register maam */
+.reg-container{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+  
+}
+
+.register-mama,
+.view-dashboard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 8px;
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    width: 25rem;
+    height: 5rem;
+    justify-content: center;
+}
+.register-mama h2 a{
+    color: #ffff;
+    text-decoration: none;
+    font-size: 1.8rem;
+ }
+ .view-dashboard h2 a{
+    font-size:1.8rem;
+    text-decoration: none;
+    color: #4E2A8A;
+ }
+
+ 
+.register-mama img{
+    height: 4rem;
+}
+.view-dashboard img{
+    height: 3rem;
+}
+.register-mama{
+    background-color: #4E2A8A; 
+    width: 30rem;
+} 
+.register-mama h2 a{
+    font-size: 1.8rem;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+}
+.view-dashboard{
+    border: 1px solid #4E2A8A;
+    width: 30rem;
+}
+.view-dashboard h2 a{
+    color: #4E2A8A;
+    font-size: 1.8rem;
+    font-family: 'Inter' , sans-serif;
+}
+.dashboard-stats{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    width: 90%;
+} 
+.view-dashboard:hover{
+    background-color: #4E2A8A;
+    transition: 0.3s ease;
+    color: #ffff;
+}
+.view-dashboard:hover h2 a{
+    color: #fff;
+}
+.registered-num,
+.due-date,
+.due-alert{
+    border: 1px solid #A1A1AA;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    width:25rem;
+    justify-content: center;
+
+}
+.bold-num{
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+

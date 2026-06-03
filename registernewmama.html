@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MamaCheck Registration</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/registernewmama.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+
+            <p class="step">Step 1 of 4</p>
+
+            <h1>Personal Information</h1>
+
+            <p class="subtitle">
+                Enter the mother's enrollment details to begin
+            </p>
+
+            <form id="registrationForm">
+
+                <input
+                    type="text"
+                    id="fullname"
+                    placeholder="Full Name"
+                    required
+                >
+
+                <div class="phone-group">
+                    <span>+234</span>
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Phone Number"
+                        required
+                    >
+                </div>
+
+                <div class="input-icon">
+                    <input
+                        type="text"
+                        id="address"
+                        placeholder="Residential Address"
+                        required
+                    >
+                    <span>📍</span>
+                </div>
+
+                <input
+                    type="text"
+                    id="lga"
+                    placeholder="LGA"
+                    required
+                >
+
+                <select id="language" required>
+                    <option value="">Preferred Language</option>
+                    <option>English</option>
+                    <option>Yoruba</option>
+                    <option>Igbo</option>
+                    <option>Hausa</option>
+                    <option>French</option>
+                </select>
+
+                <button type="submit">
+                    Continue
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</body>
+</html>
