@@ -3,13 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login page</title>
+    <title>MamaCheck Login</title>
     <link rel="stylesheet" href="css/login.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main>
-        
+
+    <main class="container">
+
+        <!-- Left Section -->
+        <section class="hero-section">
+
+            <header class="logo">
+                <img src="images/image 12 (Colorized).svg" alt="MamaCheck Logo">
+            </header>
+
+            <div class="hero-content">
+                <img
+                    src="images/Pregnant woman.svg"
+                    alt="Pregnant Woman Using Mobile Phone"
+                    class="hero-image"
+                >
+
+                <h1>Care that reaches every doorstep.</h1>
+
+                <p>
+                    One secure platform for administrators and Community
+                    Health Extension Workers to coordinate care,
+                    track visits, and serve communities better.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Right Section -->
+        <section class="form-section">
+
+            <article class="auth-card">
+
+                <header class="card-header">
+                    <h2>Welcome back</h2>
+                    <p>Sign in to continue to your dashboard.</p>
+                </header>
+
+                <!-- Role Switch -->
+                <section class="role-section">
+
+                    <label class="label-text">I AM SIGNING IN AS</label>
+
+                    <div class="role-toggle">
+
+                        <button
+                            type="button"
+                            class="role-btn active"
+                            data-role="Admin"
+                        >
+                            Admin
+                        </button>
+
+                        <button
+                            type="button"
+                            class="role-btn"
+                            data-role="CHEW"
+                        >
+                            CHEW
+                        </button>
+
+                    </div>
+
+                </section>
+
+                <!-- Tabs -->
+                <div class="auth-tabs">
+
+                    <button class="tab-btn active" data-tab="login">
+                        Login
+                    </button>
+
+                    <button class="tab-btn" data-tab="signup">
+                        Sign Up
+                    </button>
+
+                </div>
+
+                <!-- Form -->
+                <form id="loginForm" novalidate>
+
+                    <div class="form-group">
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="+234 800 000 0000"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="password-header">
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <a href="#">
+                                Forgot?
+                            </a>
+                        </div>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        Sign In as Admin
+                    </button>
+
+                </form>
+
+                <footer class="card-footer">
+                    <p>
+                        By continuing you agree to our
+                        <a href="#">Terms</a> and
+                        <a href="#">Privacy Policy</a>.
+                    </p>
+                </footer>
+            </article>
+        </section>
     </main>
 </body>
 </html>
