@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration page 2</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/registernewmama.css">
+    <!--Java script-->
+    <script src="js/reg.js" defer></script>
+</head>
+<body>
+    <main class="container">
+        <section class="container">
+            <div class="card">
+                <div class="progress-container">
+                    <div class="progress-bar2"></div>
+                </div>
+                <p class="step">Step 2 of 4</p>
+
+                <h1>Pregnancy Details</h1>
+                <p class="subtitle">Information used to schedule ANC reminders and monitoring.</p>
+
+                <form id="registration-form2" action="">
+
+                <input type="date"
+                    id="menstrualPeriod"
+                    placeholder="DD/MM/YY"
+                    required
+                >
+                <div class="menstrualperiod">
+                    <input type="text"
+                        id="menstrualPeriod"
+                         placeholder="Expected Delivery Date"
+                        required
+                    >
+                </div>
+                
+                <select id="language" required>
+                    <option value="">Nearest PHC/Clinic</option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                </select>
+                <select id="language" required>
+                    <option value="">Assigned CHEW/Nurse</option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                </select>
+
+                <button class="continue-btn"
+                    type="button">
+                        Continue
+                </button>    
+            </form>
+            <div class="info-use">
+                <img src="images/lucide_info.svg" alt="">
+                <p>MamaCheck uses this information to calculate weekly reminders and ANC schedules.</p>
+
+            </div>
+            
+            </div>
+        </section>
+    </main>
+    
+</body>
+</html>

@@ -53,6 +53,25 @@ body{
     background:#6B3DB7;
     border-radius:20px;
 }
+.progress-bar2{
+    width:50%;
+    height:100%;
+    background:#6B3DB7;
+    border-radius:20px;
+}
+
+.progress-bar3{
+    width:75%;
+    height:100%;
+    background:#6B3DB7;
+    border-radius:20px;
+}
+.progress-bar4{
+    width:100%;
+    height:100%;
+    background:#6B3DB7;
+    border-radius:20px;
+}
 
 .step{
     text-align:center;
@@ -97,7 +116,7 @@ select:focus{
     border-color:#6B3DB7;
 }
 
-.phone-group{
+.phone-group,.menstrualperiod{
     display:flex;
     align-items:center;
     border:1.5px solid #bca6e7;
@@ -142,6 +161,21 @@ button{
 
 button:hover{
     background:#4c2390;
+}
+.info-use p{
+    font-family: 'Roboto';
+    padding-top: 1rem;
+    color: #8D81A1;
+}
+.info-use{
+    display: flex;
+    gap: 1rem;
+}
+
+
+form label{
+    margin-bottom: 0px; /* space between label and input */
+    font-weight: 500;
 }
 
 @media(max-width:768px){
