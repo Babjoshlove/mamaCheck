@@ -120,3 +120,22 @@ enrollBtn.addEventListener("click", () => {
 // INITIAL LOAD
 // ===============================
 document.addEventListener("DOMContentLoaded", fetchWomen);
+
+
+function updateDate() {
+    const now = new Date();
+
+    const options = {
+        weekday: "long", I 
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    };
+
+    const currentDate = now.toLocaleDateString("en-US", options);
+
+    document.getElementById("date").textContent = currentDate;
+}
+
+// run once on load
+updateDate();
