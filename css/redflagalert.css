@@ -117,6 +117,16 @@ html{
     display: flex;
     color: #A1A1AA;
 }
+.overview a,
+.registry,
+.tracker a,
+.alert,
+.action-enroll,
+.summary{
+    text-decoration: none;
+}
+
+
 .overview,
 .registry,
 .tracker,

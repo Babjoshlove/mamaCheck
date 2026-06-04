@@ -104,21 +104,17 @@ body{
     margin-bottom:30px;
     font-weight: 600;
 }
-
 .hero-buttons{
     display:flex;
     gap:15px;
 }
-
 .btn{
     display:inline-block;
     padding:2rem 2.8rem;
     border-radius:1.4rem;
     text-decoration:none;
     font-weight:600;
-    
 }
-
 .btn-primary{
     background:#7c3aed;
     color:white;
@@ -127,7 +123,6 @@ body{
 .btn-primary:hover{
     opacity:;
 }
-
 .btn-outline{
     border:2px solid #d1d5db;
     color:#333;
@@ -143,7 +138,6 @@ body{
 
 .hero-image img{
     width:50%;
-    /* max-width:450px; */
 }
 
 /* Floating Cards */
@@ -256,7 +250,7 @@ body{
 }
 
 .container h1{
-    font-size:4rem;
+    font-size:5rem;
     margin-bottom:20px;
 }
 
@@ -295,13 +289,6 @@ body{
     margin-top: 2rem;
     align-items:start;
 }
-
-/* .how-it-works-box1:hover,
-.how-it-works-box2:hover,
-.how-it-works-box3:hover{
-    transform: translateY(-5px);
-} */
-
 .how-it-works-box1 img,
 .how-it-works-box2 img,
 .how-it-works-box3 img{
@@ -382,7 +369,137 @@ body{
         font-size:2rem;
     }
 }
+/*WHY MAMA CHECK */
 
-.mama-check-container{
+.why-mama-check{
     padding: 5rem;
+    background-color: #F7F4EF;;
+}
+.why-mama-check1 p,
+.why-mama-check2 p,
+.why-mama-check3 p{
+    font-family: 'inter', sans-serif;
+    justify-self: center;
+}
+.why-mama-check1,
+.why-mama-check2,
+.why-mama-check3{
+    padding-bottom: 4rem;
+}
+
+
+.why-mama-check1{
+    color: #3F2864;
+    font-weight: 800;
+    padding-bottom: 2rem;
+}
+.why-mama-check2{
+    font-size: 4rem;
+    color: #3F2864;
+    font-weight: 700;
+}
+.why-mama-check3 p{
+    color: #3F2864;
+   
+}
+.why-mama-card-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 4rem;
+}
+.why-mama-card img{
+    height: 5rem;
+}
+.card2 p{
+    color: #49454F;
+
+}
+.why-mama-card{
+    display: flex;
+    width: 40rem;
+    border:1px solid #4E2A8A36;
+    background-color: #FFFFFF;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    border-radius: 20px;
+
+}
+.card2 h2{
+    padding-bottom: 1rem;
+}
+.why-mama-stats{
+    margin-top: 2rem;
+    display: flex;
+    padding:3rem;
+    border-top: 1px solid #9E94B0;
+    align-items: center;
+    justify-content: center;
+}
+.mama-stat,
+.mama-stat1{
+    padding:3rem;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+}
+.mama-stat{
+    border-right: 1px solid #9E94B0;
+}
+
+
+
+/*MATERNAL FEATURES*/
+.maternal-box{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right,#F6F3EF,#4D307D,#4D307D,#F7F4EF);
+}
+.explore-btn,.learn-btn{
+    padding:1rem;
+    cursor: pointer;
+    font-family: 'Roboto';
+    width: 18rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+.btn{
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+}
+.explore-btn{
+    background-color: #FFFFFF;
+    color: #301A55;
+
+
+}
+.learn-btn{
+    border: 1px solid #FFFFFFE5;
+    background-color: #301A55;
+    color: #FFFFFF;
+}
+.maternal-box h2{
+    justify-self: center;
+    font-size: 5rem;
+    line-height: 1.2;
+    font-family: 'Inter';
+    color: #FFFFFF;
+}
+.maternal-box p{
+    justify-self: center;
+    font-size: 2.3rem;
+    font-family: 'Inter';
+    color: #FFFFFF;
+     line-height: 1.2;
+}
+.p-class{
+    padding: 3rem;
 }
