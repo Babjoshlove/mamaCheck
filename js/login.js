@@ -1,3 +1,3 @@
 document.querySelector(".continue-btn").addEventListener("click", () => {
-    window.location.href = "redflagalert.html";
+    window.location.href = "registration4.html";
 });

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woman registry</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/womenregistry.css">
+    <script src="js/womenregistry.js" defer></script>
+
+</head>
+<body>
+    <header class="header">
+        <div class="header-box1">
+            <img src="images/image 11.svg" alt="">
+            <p>Women Registry</p>
+        </div>
+        <div class="header-box2">
+            <div class="search-box">
+                <i class='bx bx-search'></i>
+                <input type="text" placeholder="Search...">
+            </div>
+            <div>
+                <h2>Fri, 15 May 2026</h2>
+            </div>
+        </div>
+
+    </header>
+    <main class="main-container">
+        <aside class="left">
+            
+            <div class="left-container">
+                <!--Main under the left container-->
+                <div class="main-sub">MAIN</div>
+
+                <div class="overview">
+                    <img src="images/mage_dashboard.svg" alt="">
+                    <h3>Overview</h3>
+                </div>
+                <div class="registry">
+                    <img src="images/mdi_register-outline.svg" alt="pregnant-woman">
+                    <h3>Women Registry</h3>
+                </div>
+                <div class="tracker">
+                    <img src="images/hugeicons_appointment-02.svg" alt="pregnant woman">
+                    <a href="ancTracker.html"><h3>ANC Tracker</h3></a>
+                </div>
+
+                <!---Alerts-->
+                <div class="main-sub">ALERTS</div>
+                <div class="alert">
+                    <img src="images/mingcute_alert-line.svg" alt="">
+                    <h3>Red Flag Alerts</h3>
+                </div>
+                <div class="summary">
+                    <img src="images/chart-square-bar.svg" alt="pregnant-woman">
+                    <h3>Weekly Summary</h3>
+                </div>
+
+                <div class="main-sub">ACTIONS</div>
+                <div class="action-enroll">
+                    <img src="images/Icon.svg" alt="pregnant-woman">
+                    <h3>Enroll New Mama</h3>
+                </div>
+            </div>
+        </aside>
+        <section class="right">
+            <div class="inner-container">
+
+                <div class="container">
+                    <div class="box-top">
+                        <h2>24 women registered</h2>
+                        <span>.</span>
+                        <h2>3 red flags</h2>
+                        <span>.</span>
+                        <h2>6 due this week</h2>
+                    </div>
+                    <div class="enroll-btn">
+                        Enroll New Mama
+                    </div>
+                </div>
+                <div class="all-reg-box">
+                    <div class="all-reg">All registered women</div>
+                    <div>View All</div>
+                </div>
+                
+                <div class="card-details">
+                    <div>NAME</div>
+                    <div>PHONE</div>
+                    <div>WEEK</div>
+                    <div>LANGUAGE</div>
+                    <div>ANC PROGRESS</div>
+                    <div>NEXT VISIT</div>
+                    <div>STATUS</div>
+                </div> 
+
+                <div id="women-list" ></div>
+                <!--
+                <div class="profile-details">
+                    <div class="card-name">
+                        <h2>Adaeze Okonkwo</h2>
+                        <h4>lagos</h4>
+                    </div>
+                    <div class="card-number">
+                        +234 803 211 0045
+                    </div>
+                    <div class="card-week">
+                        Wk 28
+                    </div>
+                    <div class="card-lang">
+                        igbo
+                    </div>
+                    <div class="anc-metrics">
+                        <div class="metrics"></div>
+                    </div>
+                    <div>
+                        18 May 2026
+                    </div>
+                    <div class="btn-visit">
+                        <div class="card-nextvisit">
+                            Red Alert
+                        </div>
+                        <div class="card-view-btn">
+                            View
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="card-name">
+                        <h2>Adaeze Okonkwo</h2>
+                        <h4>lagos</h4>
+                    </div>
+                    <div class="card-number">
+                        +234 803 211 0045
+                    </div>
+                    <div class="card-week">
+                        Wk 28
+                    </div>
+                    <div class="card-lang">
+                        igbo
+                    </div>
+                    <div class="anc-metrics">
+                        <div class="metrics"></div>
+                    </div>
+                    <div>
+                        18 May 2026
+                    </div>
+                    <div class="btn-visit">
+                        <div class="card-nextvisit">
+                            Red Alert
+                        </div>
+                        <div class="card-view-btn">
+                            View
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="card-name">
+                        <h2>Adaeze Okonkwo</h2>
+                        <h4>lagos</h4>
+                    </div>
+                    <div class="card-number">
+                        +234 803 211 0045
+                    </div>
+                    <div class="card-week">
+                        Wk 28
+                    </div>
+                    <div class="card-lang">
+                        igbo
+                    </div>
+                    <div class="anc-metrics">
+                        <div class="metrics"></div>
+                    </div>
+                    <div>
+                        18 May 2026
+                    </div>
+                    <div class="btn-visit">
+                        <div class="card-nextvisit">
+                            Red Alert
+                        </div>
+                        <div class="card-view-btn">
+                            View
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="card-name">
+                        <h2>Adaeze Okonkwo</h2>
+                        <h4>lagos</h4>
+                    </div>
+                    <div class="card-number">
+                        +234 803 211 0045
+                    </div>
+                    <div class="card-week">
+                        Wk 28
+                    </div>
+                    <div class="card-lang">
+                        igbo
+                    </div>
+                    <div class="anc-metrics">
+                        <div class="metrics"></div>
+                    </div>
+                    <div>
+                        18 May 2026
+                    </div>
+                    <div class="btn-visit">
+                        <div class="card-nextvisit">
+                            Red Alert
+                        </div>
+                        <div class="card-view-btn">
+                            View
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="card-name">
+                        <h2>Adaeze Okonkwo</h2>
+                        <h4>lagos</h4>
+                    </div>
+                    <div class="card-number">
+                        +234 803 211 0045
+                    </div>
+                    <div class="card-week">
+                        Wk 28
+                    </div>
+                    <div class="card-lang">
+                        igbo
+                    </div>
+                    <div class="anc-metrics">
+                        <div class="metrics"></div>
+                    </div>
+                    <div>
+                        18 May 2026
+                    </div>
+                    <div class="btn-visit">
+                        <div class="card-nextvisit">
+                            Red Alert
+                        </div>
+                        <div class="card-view-btn">
+                            View
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="card-name">
+                        <h2>Adaeze Okonkwo</h2>
+                        <h4>lagos</h4>
+                    </div>
+                    <div class="card-number">
+                        +234 803 211 0045
+                    </div>
+                    <div class="card-week">
+                        Wk 28
+                    </div>
+                    <div class="card-lang">
+                        igbo
+                    </div>
+                    <div class="anc-metrics">
+                        <div class="metrics"></div>
+                    </div>
+                    <div>
+                        18 May 2026
+                    </div>
+                    <div class="btn-visit">
+                        <div class="card-nextvisit">
+                            Red Alert
+                        </div>
+                        <div class="card-view-btn">
+                            View
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+    </main>
+    
+</body>
+</html>

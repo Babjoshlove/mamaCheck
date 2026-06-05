@@ -82,7 +82,7 @@ body{
 
 h1{
     text-align:center;
-    font-size:34px;
+    font-size:1.8rem;
     color:#222;
     margin-bottom:8px;
 }
@@ -90,7 +90,7 @@ h1{
 .subtitle{
     text-align:center;
     color:#888;
-    font-size:14px;
+    font-size:0.8rem;
     margin-bottom:30px;
 }
 
@@ -98,6 +98,10 @@ form{
     display:flex;
     flex-direction:column;
     gap:16px;
+}
+input[type="date"]{
+    font-family:'Inter', sans-serif;
+    color:#555;
 }
 
 input,
@@ -147,7 +151,7 @@ select:focus{
 }
 
 button{
-    margin-top:15px;
+    margin-top:0.3rem;
     height:50px;
     border:none;
     border-radius:10px;
@@ -159,23 +163,55 @@ button{
     transition:.3s;
 }
 
+.skip-btn{
+    margin-top:0.3rem;
+    height:50px;
+    border:1px solid #4E2A8A;
+    border-radius:10px;
+    background:#F8F7F7;
+    color:#4E2A8A;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+.skip-btn:hover{
+    background-color: #4E2A8A;
+    color: #fff;
+}
+
 button:hover{
-    background:#4c2390;
+    background:#F8F7F7;
+    color:#4E2A8A;
+    border: 1px solid #4E2A8A ;
 }
 .info-use p{
     font-family: 'Roboto';
-    padding-top: 1rem;
+    padding-top: 0rem;
     color: #8D81A1;
+    font-size: 0.8rem;
 }
 .info-use{
     display: flex;
     gap: 1rem;
 }
-
+.info-use img{
+    height: 2rem;
+}
 
 form label{
-    margin-bottom: 0px; /* space between label and input */
-    font-weight: 500;
+    margin-bottom:-1rem;
+    font-weight:400;
+    color: #574D69;
+}
+input::placeholder{
+    color:#999;
+}
+
+input,
+select,
+button{
+    transition:all .3s ease;
 }
 
 @media(max-width:768px){
@@ -188,4 +224,107 @@ form label{
     h1{
         font-size:28px;
     }
+}
+
+@media (max-width: 480px){
+
+    body{
+        padding:10px;
+    }
+
+    .card{
+        width:100%;
+        padding:20px;
+        border-radius:12px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
+    .subtitle{
+        font-size:0.75rem;
+    }
+}
+
+/*REGISTRATION 4TH RATE*/
+.verification{
+    width:100%;
+    max-width:1500px;
+    min-height:90vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    radial-gradient(circle at top left,
+    rgba(110,66,193,.3),
+    transparent 30%),
+    radial-gradient(circle at bottom right,
+    rgba(110,66,193,.3),
+    transparent 25%);
+    flex-direction: column;
+}
+/* .card img{
+   height: 7rem;
+} */
+
+.otp-container{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin:20px 0;
+}
+
+.otp-input{
+    width:50px;
+    height:50px;
+    border:1px solid #8E8E93;
+    border-radius:10px;
+    text-align:center;
+    font-size:1rem;
+    font-weight:600;
+    outline:none;
+    transition:0.3s;
+}
+
+.otp-input:focus{
+    border-color:#5A26AB;
+    box-shadow:0 0 0 3px rgba(90,38,171,0.15);
+}
+.verify-box{
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto';
+    color: #4E2A8A;
+}
+.verify-btn{
+    margin-top:0.3rem;
+    padding: 0rem 4rem;
+    border:none;
+    border-radius:10px;
+    background:#5d2ea8;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+.wrap-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-direction: column;
+}
+.wrap-image img{
+    height: 7rem;
+}
+.card-p{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8D81A1;
 }

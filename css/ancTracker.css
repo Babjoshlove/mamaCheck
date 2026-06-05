@@ -131,7 +131,11 @@ html{
 .main-sub{
     /* margin-bottom: 2rem; */
 }
-
+.tracker a,.overview a,
+.registry a, .alert a ,.summary a{
+    text-decoration: none;
+    color: #FFFFFF;
+}
 /*RIGHT CONTAINER*/
 .right{
     background-color: #F7F4EF;

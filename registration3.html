@@ -29,8 +29,9 @@
                 </div>
                 <p class="step">Step 3 of 4</p>
 
-                <h1>Pregnancy Details</h1>
-                <p class="subtitle">Information used to schedule ANC reminders and monitoring.</p>
+                <h1>Trusted Contact</h1>
+                <p class="subtitle">Add a family member or trusted person who can
+                     support the mother during emergencies or ANC visits</p>
 
                 <form id="registration-form3" action="">
                     <label for="Trusted contact Name">Trusted Contact Name</label>
@@ -39,18 +40,45 @@
                         placeholder="Chinedu Okafor"
                         required
                     >
-          
-                    <label for="relationship">Relationship</label>
-                    <div class="menstrualperiod">
-                        <input type="text"
-                            id="menstrualPeriod"
-                            placeholder="Expected Delivery Date"
+
+                    <select id="language" required>
+                        <option value="">Relationship</option>
+                        <option value="">Husband</option>
+                        <option>Father</option>
+                        <option>Mother</option>
+                        <option>Uncle</option>
+                        <option>Aunt</option>
+                        <option>Sister</option>
+                        <option>Brother</option>
+                        <option>Others</option>
+                    </select>
+
+                    <div class="phone-group">
+                        <span>+234</span>
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="Phone Number"
                             required
                         >
                     </div>
+
+                    <select id="language" required>
+                        <option value="">Preferred Language</option>
+                        <option>English</option>
+                        <option>Yoruba</option>
+                        <option>Igbo</option>
+                        <option>Hausa</option>
+                        <option>French</option>
+                    </select>
                     <button class="continue-btn"
                         type="button">
                         Continue
+                    </button> 
+
+                    <button class="skip-btn"
+                        type="button">
+                        Skip this step
                     </button> 
                 </form>
             </div>       

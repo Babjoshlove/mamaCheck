@@ -33,47 +33,51 @@
                 <p class="subtitle">Information used to schedule ANC reminders and monitoring.</p>
 
                 <form id="registration-form2" action="">
-
+                
+                <label for="Last Menstrual Period">Last Menstrual Period</label>
                 <input type="date"
                     id="menstrualPeriod"
                     placeholder="DD/MM/YY"
                     required
                 >
+                <label for="Expected Delivery Date">Expected Delivery Date</label>
                 <div class="menstrualperiod">
-                    <input type="text"
+                    <input type="date"
                         id="menstrualPeriod"
                          placeholder="Expected Delivery Date"
                         required
                     >
                 </div>
-                
+                <label for="Nearest PHC/Clinic">Nearest PHC/Clinic</label>
                 <select id="language" required>
-                    <option value="">Nearest PHC/Clinic</option>
+                    <option value="">select clinic</option>
                     <option></option>
                     <option></option>
                     <option></option>
                     <option></option>
                     <option></option>
                 </select>
+                <label for="Assigned CHEW/Nurse">Assigned CHEW/Nurse</label>
                 <select id="language" required>
-                    <option value="">Assigned CHEW/Nurse</option>
+                    <option value=""></option>
                     <option></option>
                     <option></option>
                     <option></option>
                     <option></option>
                     <option></option>
                 </select>
+
+                <div class="info-use">
+                    <img src="images/lucide_info.svg" alt="">
+                    <p>MamaCheck uses this information to calculate weekly reminders and ANC schedules.</p>
+                </div>
 
                 <button class="continue-btn"
                     type="button">
                         Continue
                 </button>    
             </form>
-            <div class="info-use">
-                <img src="images/lucide_info.svg" alt="">
-                <p>MamaCheck uses this information to calculate weekly reminders and ANC schedules.</p>
-
-            </div>
+            
             
             </div>
         </section>
