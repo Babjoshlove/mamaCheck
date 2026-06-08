@@ -63,7 +63,16 @@
 
 // // Initial state
 // updateView();
+const passwordInput = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
 
+togglePassword.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";   // SHOW password
+    } else {
+        passwordInput.type = "password"; // HIDE password
+    }
+});
 // =====================
 // SELECT ELEMENTS
 // =====================
