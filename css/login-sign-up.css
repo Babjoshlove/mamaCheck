@@ -230,3 +230,6 @@ body{
         max-width:100%;
     }
 }
+.phone-field {
+    display: none;
+}

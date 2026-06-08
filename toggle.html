@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .auth-form{
+    display:none;
+}
+
+.auth-form.active{
+    display:block;
+}
+
+.role-btn.active,
+.tab-btn.active{
+    background:#6C2BD9;
+    color:#fff;
+}
+    </style>
+</head>
+<body>
+
+    <!-- Role Toggle -->
+<div class="role-toggle">
+    <button type="button" class="role-btn active" data-role="Admin">
+        Admin
+    </button>
+
+    <button type="button" class="role-btn" data-role="CHEW">
+        CHEW
+    </button>
+</div>
+
+<!-- Auth Tabs -->
+<div class="auth-tabs">
+    <button class="tab-btn active" data-tab="login">
+        Login
+    </button>
+
+    <button class="tab-btn" data-tab="signup">
+        Sign Up
+    </button>
+</div>
+
+<!-- Login Form -->
+<form id="loginForm" class="auth-form active">
+    <!-- login fields -->
+</form>
+
+<!-- Signup Form -->
+<form id="signupForm" class="auth-form">
+    <!-- signup fields -->
+</form>
+
+<script>
+    // Role Toggle
+const roleBtns = document.querySelectorAll(".role-btn");
+const submitBtn = document.querySelector(".submit-btn");
+
+roleBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        roleBtns.forEach(b => b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+        const role = btn.dataset.role;
+
+        submitBtn.textContent = `Sign In as ${role}`;
+    });
+});
+
+
+// Login & Signup Toggle
+const tabBtns = document.querySelectorAll(".tab-btn");
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+
+tabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        tabBtns.forEach(b => b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+        if (btn.dataset.tab === "login") {
+            loginForm.classList.add("active");
+            signupForm.classList.remove("active");
+        } else {
+            signupForm.classList.add("active");
+            loginForm.classList.remove("active");
+        }
+    });
+});
+</script>
+</body>
+</html>

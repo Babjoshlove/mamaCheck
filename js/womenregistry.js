@@ -8,7 +8,7 @@ const women = [
     language: "Igbo",
     progress: 30,
     nextVisit: "18 May 2026",
-    status: "Red"
+    status: "Red Alert"
   },
   {
     name: "Amina Bello",
@@ -18,7 +18,7 @@ const women = [
     language: "Hausa",
     progress: 55,
     nextVisit: "20 May 2026",
-    status: "Blue"
+    status: "Blue Alert"
   },
   {
     name: "Chioma Eze",
@@ -28,7 +28,7 @@ const women = [
     language: "Igbo",
     progress: 90,
     nextVisit: "22 May 2026",
-    status: "Red"
+    status: "Red Alert"
   },
   {
     name: "james busola",
@@ -38,7 +38,7 @@ const women = [
     language:"Yoruba",
     progress:"98",
     nextVisit:"1 june 2026",
-    status:"Red"
+    status:"Red Alert"
   }
 ];
 const womenList = document.getElementById("women-list");
@@ -46,7 +46,7 @@ const womenList = document.getElementById("women-list");
 function getAlertStatus(progress) {
   if (progress >= 80) {
     return {
-      text: "Red",
+      text: "Red Alert",
       bgColor: "#FEE2E2",
       textColor: "#DC2626",
       progressColor: "#DC2626"
@@ -55,7 +55,7 @@ function getAlertStatus(progress) {
 
   if (progress >= 51) {
     return {
-      text: "Blue",
+      text: "Blue Alert",
       bgColor: "#DBEAFE",
       textColor: "#2563EB",
       progressColor: "#2563EB"
@@ -63,7 +63,7 @@ function getAlertStatus(progress) {
   }
 
   return {
-    text: "Green",
+    text: "Green Alert",
     bgColor: "#DCFCE7",
     textColor: "#16A34A",
     progressColor: "#16A34A"
