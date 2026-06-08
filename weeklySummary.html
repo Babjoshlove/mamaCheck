@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MamaCheck</title>
+      <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+     <!-- aside bar -->
+     <aside>
+    
+         <div class="main-wrapper">
+            <!-- mamacheck logo -->
+             <div class="mamacheck-logo">
+            <img src="/images/image 11.svg" alt="mamacheck-logo">
+            <p>CHEW Dashboard . Pilot</p>
+        </div>
+           <!-- nav container -->
+            <nav>
+                <div class="main-container">
+                    <div class="main">
+                    <p>MAIN</p></div>
+                    <div class="main-sub">
+                         <a href="overview.html" class="sub">
+                        <img src="images/mage_dashboard.svg" alt="dashboardImage">Overview</a>
+               
+                    <a href="#" class="sub">
+                        <img src="images/mdi_register-outline.svg" alt="registryImage">Women Registry</a>
+                
+                    <a href="#" class="sub">
+                        <img src="images/hugeicons_appointment-02.svg" alt="appointmentImage">ANC Tracker</a>
+                    </div>
+                </div>
+               <!-- alerts container -->
+                <div class="alerts-container">
+                    <div class="alerts"><p>Alerts</p></div>
+                    <div class="alerts-sub">
+                        <a href="redFlagAlerts.html" class="sub red">
+                        <img src="images/mingcute_alert-line.svg" alt="alertImage">Red Flag Alerts <span>3</span></a>
+                    <a href="weeklySummary.html" class="sub">
+                        <img src="images/chart-square-bar.svg" alt="chartImage">Weekly Summary</a>
+                    </div>
+                </div>
+               <!-- actions container -->
+                <div class="actions-container">
+                    <div class="actions"><p>Actions</p></div>
+                     <a href="#" class="sub">
+                        <img src="images/Icon.svg" alt="plusImage">Enroll New Mama</a>
+                </div>
+            </nav>
+         </div>
+        
+         <!-- user profile & info -->
+          <div class="user-profile">
+            <div class="profile"><h3>NK</h3></div>
+            <!-- user info -->
+             <div class="info">
+                <h5>Nurse Ngozi Kalu</h5>
+                <p>Awka Central PHC</p>
+             </div>
+          </div>
+     </aside>
+
+     <main>
+         <!-- topbar -->
+            <div class="top-bar">
+           <div> <a href="weeklySummary.html">Weekly Summary</a></div>
+            <div class="inputDate">
+                <!-- input -->
+                <div class="input-container">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.25 14.25L9.75 9.75M11.25 6C11.25 8.89949 8.89949 11.25 6 11.25C3.10051 11.25 0.75 8.89949 0.75 6C0.75 3.10051 3.10051 0.75 6 0.75C8.89949 0.75 11.25 3.10051 11.25 6Z" stroke="#A1A1AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> <input type="text" placeholder="Search Patients"> </div>
+               <!-- date -->
+                <p>Fri, 15 May 2026</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="weekly-container">
+                <div class="weekly-header">
+                    <p>Week of 12 - 18 May 2026</p>
+                </div>
+                <!-- left and right weekly cards -->
+                 <div class="weekly-leftRight">
+                    <div class="weekly-left">
+                        <!-- card -->
+                      <div class="weekly-card">
+                        <span>Total registered women</span>
+                        <h1 class="dark">24</h1>
+                        <span>↑ 3 new enrollments this week</span>
+                        <div class="weekly-progress"><div class="weekly-fill dark"></div></div>
+                      </div>
+                        <!-- card -->
+                      <div class="weekly-card">
+                        <span>Danger sign response rate</span>
+                        <h1 class="orange">71%</h1>
+                        <span>17 of 24 check-ins generated action</span>
+                        <div class="weekly-progress"><div class="weekly-fill orange"></div></div>
+                      </div>
+                        <!-- card -->
+                      <div class="weekly-card">
+                        <span>Open red flags this wek</span>
+                        <h1 class="red">3</h1>
+                        <span>4 total • 1 closed with outcome recorded</span>
+                        <div class="weekly-progress"><div class="weekly-fill red"></div></div>
+                      </div>
+                    </div>
+                  <!-- right -->
+                   <div class="weekly-right">
+                    <!-- card -->
+                      <div class="weekly-card">
+                        <span>ANC visit completion rate (6+ visits)</span>
+                        <h1 class="green">63%</h1>
+                        <span>Target ⪰ 60% • Pilot goal achieved √</span>
+                        <div class="weekly-progress"><div class="weekly-fill green"></div></div>
+                      </div>
+                      <!-- card -->
+                      <div class="weekly-card">
+                        <span>Red-flag accuracy (zero under-triage)</span>
+                        <h1 class="green">100%</h1>
+                        <span>All 4 red-flag combinations correctly routed √</span>
+                        <div class="weekly-progress"><div class="weekly-fill fullgreen"></div></div>
+                      </div>
+                      <!-- card -->
+                      <div class="weekly-card">
+                        <span>Missed visits this week</span>
+                        <h1 class="orange">3</h1>
+                        <span>Follow-up reminders sent for all 3</span>
+                        <div class="weekly-progress"><div class="weekly-fill fullorange"></div></div>
+                      </div>
+                   </div>
+                 </div>
+
+            </div>
+        </div>
+     </main>
+</body>
+</html>

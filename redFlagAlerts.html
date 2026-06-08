@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MamaCheck</title>
+      <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+     <!-- aside bar -->
+     <aside>
+    
+         <div class="main-wrapper">
+            <!-- mamacheck logo -->
+             <div class="mamacheck-logo">
+            <img src="/images/image 11.svg" alt="mamacheck-logo">
+            <p>CHEW Dashboard . Pilot</p>
+        </div>
+           <!-- nav container -->
+            <nav>
+                <div class="main-container">
+                    <div class="main">
+                    <p>MAIN</p></div>
+                    <div class="main-sub">
+                         <a href="overview.html" class="sub">
+                        <img src="images/mage_dashboard.svg" alt="dashboardImage">Overview</a>
+               
+                    <a href="#" class="sub">
+                        <img src="images/mdi_register-outline.svg" alt="registryImage">Women Registry</a>
+                
+                    <a href="#" class="sub">
+                        <img src="images/hugeicons_appointment-02.svg" alt="appointmentImage">ANC Tracker</a>
+                    </div>
+                </div>
+               <!-- alerts container -->
+                <div class="alerts-container">
+                    <div class="alerts"><p>Alerts</p></div>
+                    <div class="alerts-sub">
+                        <a href="redFlagAlerts.html" class="sub red">
+                        <img src="images/mingcute_alert-line.svg" alt="alertImage">Red Flag Alerts <span>3</span></a>
+                    <a href="weeklySummary.html" class="sub">
+                        <img src="images/chart-square-bar.svg" alt="chartImage">Weekly Summary</a>
+                    </div>
+                </div>
+               <!-- actions container -->
+                <div class="actions-container">
+                    <div class="actions"><p>Actions</p></div>
+                     <a href="#" class="sub">
+                        <img src="images/Icon.svg" alt="plusImage">Enroll New Mama</a>
+                </div>
+            </nav>
+         </div>
+        
+         <!-- user profile & info -->
+          <div class="user-profile">
+            <div class="profile"><h3>NK</h3></div>
+            <!-- user info -->
+             <div class="info">
+                <h5>Nurse Ngozi Kalu</h5>
+                <p>Awka Central PHC</p>
+             </div>
+          </div>
+     </aside>
+         <!-- main -->
+          <main>
+            <!-- topbar -->
+            <div class="top-bar">
+           <div> <a href="redflagalert.html">Red Flag Alerts</a></div>
+            <div class="inputDate">
+                <!-- input -->
+                <div class="input-container">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.25 14.25L9.75 9.75M11.25 6C11.25 8.89949 8.89949 11.25 6 11.25C3.10051 11.25 0.75 8.89949 0.75 6C0.75 3.10051 3.10051 0.75 6 0.75C8.89949 0.75 11.25 3.10051 11.25 6Z" stroke="#A1A1AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> <input type="text" placeholder="Search Patients"> </div>
+               <!-- date -->
+                <p>Fri, 15 May 2026</p>
+            </div>
+        </div>
+
+        <!-- content -->
+         <div class="content">
+           <div class="redflag-container">
+            <div class="redflag-header">
+                <p>3 open. 1 closed in the last 7 days</p>
+                <div class="redflag-btns">
+                    <button class="redflag-btn">open</button>
+                    <button class="redflag-btn">All</button>
+                </div>
+            </div>
+             <!-- red flag card rows -->
+              <div class="redflag-cards">
+                <!-- redflag card -->
+                <div class="redflag-card">
+                    <!-- redflag left -->
+                    <div class="redflag-left">
+                        <div class="redflag-icon">
+                            <img src="/images/alert caution mark.svg" alt="caution icon">
+                        </div>
+                        <div class="redflag-text">
+                            <h5>Adaeze Okonkwo</h5>
+                            <span>Wk 28 • +234 803 211 0045 • Awka PHC • Reported today 08:42</span>
+                            <div class="redflag-pills"> <span class="redflag-pill">Heavy Bleeding</span> <span class="redflag-pill">Severe abdominal pain</span></div>
+                            <span>CHEW alerted: 08:42 • Trusted contact alerted: 08:42 • CHEW SMS delivered<svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.5 6.02167L1.83833 7.45667C2.57667 8.24833 2.94583 8.64333 3.35917 8.76833C3.7225 8.8775 4.10917 8.84833 4.455 8.685C4.84917 8.49833 5.165 8.05083 5.79833 7.155L10.5 0.5" stroke="#79747E" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></span>
+                        </div>
+                    </div>
+                    <!-- redflag right -->
+                     <div class="redflag-right">
+                        <a href="#">OPEN</a>
+                        <span>Today</span>
+                        <span>08:42</span>
+                        <button class="close-red">Close case</button>
+                     </div>
+                </div>
+                <!-- redflag card -->
+                <div class="redflag-card">
+                    <!-- redflag left -->
+                    <div class="redflag-left">
+                        <div class="redflag-icon">
+                            <img src="/images/alert caution mark.svg" alt="caution icon">
+                        </div>
+                        <div class="redflag-text">
+                            <h5>Blessing Nwosu</h5>
+                            <span>Wk 28 • +234 808 445 2201 • Awka PHC • Reported today 14:05</span>
+                            <div class="redflag-pills"> <span class="redflag-pill">Severe</span> <span class="redflag-pill">Blurry vision</span></div>
+                            <span>CHEW alerted: 14:05 • Trusted contact alerted: 14:05 • CHEW SMS delivered<svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.5 6.02167L1.83833 7.45667C2.57667 8.24833 2.94583 8.64333 3.35917 8.76833C3.7225 8.8775 4.10917 8.84833 4.455 8.685C4.84917 8.49833 5.165 8.05083 5.79833 7.155L10.5 0.5" stroke="#79747E" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></span>
+                        </div>
+                    </div>
+                    <!-- redflag right -->
+                     <div class="redflag-right">
+                        <a href="#">OPEN</a>
+                        <span>Yesterday</span>
+                        <span>14:05</span>
+                        <button class="close-red">Close case</button>
+                     </div>
+                </div>
+                <!-- redflag card -->
+                <div class="redflag-card">
+                    <!-- redflag left -->
+                    <div class="redflag-left">
+                        <div class="redflag-icon">
+                            <img src="/images/alert caution mark.svg" alt="caution icon">
+                        </div>
+                        <div class="redflag-text">
+                            <h5>Ngozi Obi</h5>
+                            <span>Wk 36 • +234 806 338 7712 • Awka PHC • Reported today 07:18</span>
+                            <div class="redflag-pills"> <span class="redflag-pill">Heavy Bleeding</span></div>
+                            <span>CHEW alerted: 07:18 • Trusted contact alerted: 07:18 • CHEW SMS delivered<svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.5 6.02167L1.83833 7.45667C2.57667 8.24833 2.94583 8.64333 3.35917 8.76833C3.7225 8.8775 4.10917 8.84833 4.455 8.685C4.84917 8.49833 5.165 8.05083 5.79833 7.155L10.5 0.5" stroke="#79747E" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></span>
+                        </div>
+                    </div>
+                    <!-- redflag right -->
+                     <div class="redflag-right">
+                        <a href="#">OPEN</a>
+                        <span>Yesterday</span>
+                        <span>07:18</span>
+                        <button class="close-red">Close case</button>
+                     </div>
+                </div>
+
+              </div>
+           </div>
+         </div>
+          </main>
+</body>
+</html>
