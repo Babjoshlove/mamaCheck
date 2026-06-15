@@ -18,7 +18,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/registernewmama.css">
     <!--Java script-->
-    <script src="js/reg.js" defer></script>
+    <script src="js/registration2.js" defer></script>
 </head>
 <body>
     <main class="container">
@@ -36,35 +36,35 @@
                 
                 <label for="Last Menstrual Period">Last Menstrual Period</label>
                 <input type="date"
-                    id="menstrualPeriod"
+                    id="lmp"
                     placeholder="DD/MM/YY"
                     required
                 >
                 <label for="Expected Delivery Date">Expected Delivery Date</label>
                 <div class="menstrualperiod">
                     <input type="date"
-                        id="menstrualPeriod"
+                        id="edd"
                          placeholder="Expected Delivery Date"
                         required
                     >
                 </div>
                 <label for="Nearest PHC/Clinic">Nearest PHC/Clinic</label>
-                <select id="language" required>
+                <select id="clinicName" required>
                     <option value="">select clinic</option>
-                    <option></option>
-                    <option></option>
-                    <option></option>
-                    <option></option>
-                    <option></option>
+                    <option>Ota Health center</option>
+                    <option>Ikeja Health Center</option>
+                    <option>FMC oyo</option>
+                    <option>FMC Abia</option>
+                    <option>Thompson Hospital</option>
                 </select>
                 <label for="Assigned CHEW/Nurse">Assigned CHEW/Nurse</label>
-                <select id="language" required>
+                <select id="assignedChew" required>
                     <option value=""></option>
-                    <option></option>
-                    <option></option>
-                    <option></option>
-                    <option></option>
-                    <option></option>
+                    <option>Dr. Bayo</option>
+                    <option>Nurse Tolu</option>
+                    <option>Dr. Thanks</option>
+                    <option>Nurse Anuoluwapo</option>
+                    <option>Nurse Maryam</option>
                 </select>
 
                 <div class="info-use">
@@ -73,7 +73,7 @@
                 </div>
 
                 <button class="continue-btn"
-                    type="button">
+                    type="submit">
                         Continue
                 </button>    
             </form>
