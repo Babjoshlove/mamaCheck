@@ -1,16 +1,25 @@
-const passwordInput = document.getElementById("password");
-const togglePassword = document.getElementById("togglePassword");
+// =============================
+// MAMACHECK AUTH SCRIPT
+// =============================
 
-togglePassword.addEventListener("click", () => {
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";   // SHOW password
-    } else {
-        passwordInput.type = "password"; // HIDE password
+// Base URL
+const BASE_URL = "https://mama-check.onrender.com";
+
+// API Endpoints
+const API = {
+    chew: {
+        register: `${BASE_URL}/api/v1/auth/register-chew`,
+        login: `${BASE_URL}/api/v1/auth/login`
+    },
+    admin: {
+        register: `${BASE_URL}/api/v1/auth/register-admin`,
+        login: `${BASE_URL}/api/v1/auth/login`
     }
-});
-// =====================
-// SELECT ELEMENTS
-// =====================
+};
+
+// =============================
+// DOM ELEMENTS
+// =============================
 const roleBtns = document.querySelectorAll(".role-btn");
 const tabBtns = document.querySelectorAll(".tab-btn");
 
@@ -18,170 +27,227 @@ const cardTitle = document.querySelector(".card-header h2");
 const cardText = document.querySelector(".card-header p");
 const submitBtn = document.querySelector(".submit-btn");
 
-// =====================
-// DEFAULT STATE (CHEW FIRST)
-// =====================
-let currentRole = "CHEW";
+const signupFields = document.querySelector(".signup-fields");
+
+const passwordInput = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
+
+const authForm = document.getElementById("authForm");
+
+// =============================
+// STATE
+// =============================
+let currentRole = "chew";
 let currentTab = "login";
 
-// =====================
-// GET API ENDPOINT
-// =====================
-function getEndpoint() {
-
-    const role = currentRole.toLowerCase();
-
-    if (role === "chew" && currentTab === "login") {
-        return "https://chewlogin.msn.api.com";
-    }
-
-    if (role === "chew" && currentTab === "signup") {
-        return "https://chewsignup.msn.api.com";
-    }
-
-    if (role === "admin" && currentTab === "login") {
-        return "https://adminlogin.msn.api.com";
-    }
-
-    if (role === "admin" && currentTab === "signup") {
-        return "https://adminsignup.msn.api.com";
-    }
-
-    return "https://msn.api.com";
-}
-
-// =====================
-// UPDATE UI VIEW
-// =====================
+// =============================
+// UPDATE UI
+// =============================
 function updateView() {
+    const roleLabel = currentRole.toUpperCase();
 
     submitBtn.textContent =
         currentTab === "login"
-            ? `Sign In as ${currentRole}`
-            : `Sign Up as ${currentRole}`;
+            ? `Sign In as ${roleLabel}`
+            : `Sign Up as ${roleLabel}`;
 
     if (currentTab === "login") {
         cardTitle.textContent = "Welcome Back";
-        cardText.textContent = "Sign in to continue to your dashboard.";
+        cardText.textContent =
+            "Sign in to continue to your dashboard.";
 
-        document.querySelector(".phone-field").style.display = "none";
-
+        signupFields.style.display = "none";
     } else {
         cardTitle.textContent = "Create Account";
-        cardText.textContent = "Register to access the platform.";
+        cardText.textContent =
+            "Register to access the platform.";
 
-        document.querySelector(".phone-field").style.display = "block";
+        signupFields.style.display = "block";
     }
 }
 
-// =====================
+// =============================
 // ROLE SWITCH
-// =====================
+// =============================
 roleBtns.forEach(btn => {
     btn.addEventListener("click", () => {
 
-        roleBtns.forEach(b => b.classList.remove("active"));
+        roleBtns.forEach(b =>
+            b.classList.remove("active")
+        );
+
         btn.classList.add("active");
 
-        currentRole = btn.dataset.role;
+        currentRole = btn.dataset.role.toLowerCase();
 
         updateView();
     });
 });
 
-// =====================
+// =============================
 // LOGIN / SIGNUP SWITCH
-// =====================
+// =============================
 tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
 
-        tabBtns.forEach(b => b.classList.remove("active"));
+        tabBtns.forEach(b =>
+            b.classList.remove("active")
+        );
+
         btn.classList.add("active");
 
-        currentTab = btn.dataset.tab;
+        currentTab = btn.dataset.tab.toLowerCase();
 
         updateView();
     });
 });
 
-// =====================
-// FORM SUBMIT (LOGIN / SIGNUP)
-// =====================
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
+// =============================
+// PASSWORD TOGGLE
+// =============================
+if (togglePassword) {
+    togglePassword.addEventListener("click", () => {
+
+        passwordInput.type =
+            passwordInput.type === "password"
+                ? "text"
+                : "password";
+    });
+}
+
+// =============================
+// API REQUEST HELPER
+// =============================
+async function sendRequest(url, payload) {
+
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(
+            data.message || "Request failed"
+        );
+    }
+
+    return data;
+}
+
+// =============================
+// FORM SUBMIT
+// =============================
+authForm.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
-    const endpoint = getEndpoint();
+    submitBtn.disabled = true;
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const phone = document.getElementById("phone")?.value;
-
-    const payload = {
-        email,
-        password,
-        role: currentRole,
-        type: currentTab
-    };
-
-    if (currentTab === "signup") {
-        payload.phone = phone;
-    }
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Please wait...";
 
     try {
-        const res = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
 
-        const data = await res.json();
+        let endpoint;
+        let payload;
 
-        if (res.ok) {
+        const email =
+            document.getElementById("email").value.trim();
 
-            // =====================
-            // SAVE SESSION (AUTO LOGIN)
-            // =====================
-            localStorage.setItem("token", data.token || "");
-            localStorage.setItem("role", currentRole.toLowerCase());
+        const password =
+            document.getElementById("password").value;
 
-            // =====================
-            // REDIRECT
-            // =====================
-            window.location.href =
-                currentRole.toLowerCase() === "chew"
-                    ? "chew-dashboard.html"
-                    : "admin-dashboard.html";
+        // LOGIN
+        if (currentTab === "login") {
 
-        } else {
-            alert(data.message || "Login failed ❌");
+            endpoint = API[currentRole].login;
+
+            payload = {
+                email,
+                password
+            };
         }
 
+        // REGISTER
+        else {
+
+            const fullName =
+                document.getElementById("firstName").value.trim();
+                document.getElementById("lastName").value.trim();
+                document.getElementById("phone").value.trim();
+                document.getElementById("state").value.trim();
+                document.getElementById("lga").value.trim();
+                document.getElementById("email").value.trim();
+                document.getElementById("password").value;
+
+            endpoint = API[currentRole].register;
+
+            payload = {
+                fullName,
+                email,
+                password
+            };
+        }
+
+        console.log("Endpoint:", endpoint);
+        console.log("Payload:", payload);
+
+        const result = await sendRequest(
+            endpoint,
+            payload
+        );
+
+        console.log("Success:", result);
+
+        alert(
+            result.message ||
+            `${currentTab} successful`
+        );
+
+        // Save token if available
+        if (result.token) {
+            localStorage.setItem(
+                "token",
+                result.token
+            );
+        }
+
+        // Redirect after login
+        if (currentTab === "login") {
+
+            if (currentRole === "admin") {
+                window.location.href =
+                    "admin-dashboard.html ";
+            } else {
+                window.location.href =
+                    "chew-dashboard.html";
+            }
+        }
+
+        authForm.reset();
+
     } catch (error) {
+
         console.error(error);
-        alert("Network error ❌");
+
+        alert(
+            error.message ||
+            "Something went wrong"
+        );
+
+    } finally {
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
     }
 });
 
-// =====================
-// AUTO LOGIN CHECK
-// =====================
-window.addEventListener("DOMContentLoaded", () => {
-
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-
-    if (token && role) {
-
-        window.location.href =
-            role === "chew"
-                ? "chew-dashboard.html"
-                : "admin-dashboard.html";
-    }
-});
-
-// =====================
-// INITIAL LOAD
-// =====================
+// =============================
+// INITIALIZE
+// =============================
 updateView();
