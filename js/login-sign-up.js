@@ -222,10 +222,10 @@ authForm.addEventListener("submit", async (e) => {
 
             if (currentRole === "admin") {
                 window.location.href =
-                    "admin-dashboard.html ";
+                    "admin-dashboard.html";
             } else {
                 window.location.href =
-                    "chew-dashboard.html";
+                    "mama-check.html";
             }
         }
 
