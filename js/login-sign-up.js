@@ -176,15 +176,13 @@ authForm.addEventListener("submit", async (e) => {
         // REGISTER
         else {
 
-            const fullName =
-                document.getElementById("firstName").value.trim();
-                document.getElementById("lastName").value.trim();
-                document.getElementById("phone").value.trim();
-                document.getElementById("state").value.trim();
-                document.getElementById("lga").value.trim();
-                document.getElementById("email").value.trim();
-                document.getElementById("password").value;
+                const firstName = document.getElementById("firstName").value.trim();
+                const lastName = document.getElementById("lastName").value.trim();
+                const phone = document.getElementById("phone").value.trim();
+                const state = document.getElementById("state").value.trim();
+                const lga = document.getElementById("lga").value.trim();
 
+                const fullName = `${firstName} ${lastName}`;
             endpoint = API[currentRole].register;
 
             payload = {
