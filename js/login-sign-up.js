@@ -1,11 +1,6 @@
-// =============================
-// MAMACHECK AUTH SCRIPT
-// =============================
-
-// Base URL
 const BASE_URL = "https://mama-check.onrender.com";
 
-// API Endpoints
+// API ENDPOINTS
 const API = {
     chew: {
         register: `${BASE_URL}/api/v1/auth/register-chew`,
@@ -17,9 +12,8 @@ const API = {
     }
 };
 
-// =============================
 // DOM ELEMENTS
-// =============================
+
 const roleBtns = document.querySelectorAll(".role-btn");
 const tabBtns = document.querySelectorAll(".tab-btn");
 
@@ -34,15 +28,13 @@ const togglePassword = document.getElementById("togglePassword");
 
 const authForm = document.getElementById("authForm");
 
-// =============================
 // STATE
-// =============================
+
 let currentRole = "chew";
 let currentTab = "login";
 
-// =============================
-// UPDATE UI
-// =============================
+
+// UI UPDATE
 function updateView() {
     const roleLabel = currentRole.toUpperCase();
 
@@ -53,15 +45,11 @@ function updateView() {
 
     if (currentTab === "login") {
         cardTitle.textContent = "Welcome Back";
-        cardText.textContent =
-            "Sign in to continue to your dashboard.";
-
+        cardText.textContent = "Sign in to continue to your dashboard.";
         signupFields.style.display = "none";
     } else {
         cardTitle.textContent = "Create Account";
-        cardText.textContent =
-            "Register to access the platform.";
-
+        cardText.textContent = "Register to access the platform.";
         signupFields.style.display = "block";
     }
 }
@@ -71,33 +59,23 @@ function updateView() {
 // =============================
 roleBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-
-        roleBtns.forEach(b =>
-            b.classList.remove("active")
-        );
-
+        roleBtns.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
         currentRole = btn.dataset.role.toLowerCase();
-
         updateView();
     });
 });
 
 // =============================
-// LOGIN / SIGNUP SWITCH
+// TAB SWITCH
 // =============================
 tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-
-        tabBtns.forEach(b =>
-            b.classList.remove("active")
-        );
-
+        tabBtns.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
         currentTab = btn.dataset.tab.toLowerCase();
-
         updateView();
     });
 });
@@ -105,9 +83,8 @@ tabBtns.forEach(btn => {
 // =============================
 // PASSWORD TOGGLE
 // =============================
-if (togglePassword) {
+if (togglePassword && passwordInput) {
     togglePassword.addEventListener("click", () => {
-
         passwordInput.type =
             passwordInput.type === "password"
                 ? "text"
@@ -116,10 +93,9 @@ if (togglePassword) {
 }
 
 // =============================
-// API REQUEST HELPER
+// FETCH HELPER
 // =============================
 async function sendRequest(url, payload) {
-
     const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -130,10 +106,11 @@ async function sendRequest(url, payload) {
 
     const data = await response.json();
 
+    console.log("STATUS:", response.status);
+    console.log("RESPONSE:", data);
+
     if (!response.ok) {
-        throw new Error(
-            data.message || "Request failed"
-        );
+        throw new Error(data.message || "Request failed");
     }
 
     return data;
@@ -143,53 +120,45 @@ async function sendRequest(url, payload) {
 // FORM SUBMIT
 // =============================
 authForm.addEventListener("submit", async (e) => {
-
     e.preventDefault();
 
     submitBtn.disabled = true;
-
     const originalText = submitBtn.textContent;
     submitBtn.textContent = "Please wait...";
 
     try {
-
         let endpoint;
         let payload;
 
-        const email =
-            document.getElementById("email").value.trim();
+        // COMMON FIELDS
+        const email = document.getElementById("email")?.value.trim();
+        const password = document.getElementById("password")?.value;
 
-        const password =
-            document.getElementById("password").value;
-
+        // =============================
         // LOGIN
+        // =============================
         if (currentTab === "login") {
-
             endpoint = API[currentRole].login;
 
-            payload = {
-                email,
-                password
-            };
+            payload = { email, password };
         }
 
+        // =============================
         // REGISTER
+        // =============================
         else {
+            const firstName = document.getElementById("firstName")?.value.trim();
+            const lastName = document.getElementById("lastName")?.value.trim();
+            const phone = document.getElementById("phone")?.value.trim();
+            const state = document.getElementById("state")?.value.trim();
+            const lga = document.getElementById("lga")?.value.trim();
+            const phcName = document.getElementById("phcName")?.value.trim();
 
-                const firstName = document.getElementById("firstName").value.trim();
-                const lastName = document.getElementById("lastName").value.trim();
-                const phone = document.getElementById("phone").value.trim();
-                const state = document.getElementById("state").value.trim();
-                const lga = document.getElementById("lga").value.trim();
-                const email = document.getElementById("email").value.trim();
-                const password = document.getElementById("password").value;
-                const phcName = document.getElementById("phcName").value.trim();
-
-                const fullName = `${firstName} ${lastName}`;
             endpoint = API[currentRole].register;
 
             payload = {
-                fullName,
+                firstName,
+                lastName,
                 email,
                 password,
                 phone,
@@ -202,57 +171,44 @@ authForm.addEventListener("submit", async (e) => {
         console.log("Endpoint:", endpoint);
         console.log("Payload:", payload);
 
-        const result = await sendRequest(
-            endpoint,
-            payload
-        );
+        const result = await sendRequest(endpoint, payload);
 
-        console.log("Success:", result);
+        alert(result.message || "Success");
 
-        alert(
-            result.message ||
-            `${currentTab} successful`
-        );
+        // =============================
+        // TOKEN HANDLING (SAFE)
+        // =============================
+        const token =
+            result.token ||
+            result.accessToken ||
+            result.data?.token;
 
-        // Save token if available
-        if (result.token) {
-            localStorage.setItem(
-                "token",
-                result.token
-            );
+        if (token) {
+            localStorage.setItem("token", token);
         }
 
-        // Redirect after login
+        // =============================
+        // REDIRECT AFTER LOGIN
+        // =============================
         if (currentTab === "login") {
-
-            if (currentRole === "admin") {
-                window.location.href =
-                    "admin-dashboard.html";
-            } else {
-                window.location.href =
-                    "mama-check.html";
-            }
+            window.location.href =
+                currentRole === "admin"
+                    ? "admin-dashboard.html"
+                    : "mama-check.html";
         }
 
         authForm.reset();
 
     } catch (error) {
-
-        console.error(error);
-
-        alert(
-            error.message ||
-            "Something went wrong"
-        );
-
+        console.error("AUTH ERROR:", error);
+        alert(error.message || "Something went wrong");
     } finally {
-
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
     }
 });
 
 // =============================
-// INITIALIZE
+// INIT
 // =============================
 updateView();
