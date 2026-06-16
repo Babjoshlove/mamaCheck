@@ -18,7 +18,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/registernewmama.css">
     <!--Java script-->
-    <script src="js/login.js" defer></script>
+    <script src="js/registration3.js" defer></script>
 </head>
 <body>
     <main class="container">
@@ -33,54 +33,56 @@
                 <p class="subtitle">Add a family member or trusted person who can
                      support the mother during emergencies or ANC visits</p>
 
-                <form id="registration-form3" action="">
-                    <label for="Trusted contact Name">Trusted Contact Name</label>
-                    <input type="text"
-                        id=""
-                        placeholder="Chinedu Okafor"
+                <form id="registration-form3">
+
+                <label for="trustedContactName">Trusted Contact Name</label>
+                <input
+                    type="text"
+                    id="trustedContactName"
+                    placeholder="Chinedu Okafor"
+                    required
+                >
+
+                <select id="relationship" required>
+                    <option value="">Relationship</option>
+                    <option value="Husband">Husband</option>
+                    <option value="Father">Father</option>
+                    <option value="Mother">Mother</option>
+                    <option value="Uncle">Uncle</option>
+                    <option value="Aunt">Aunt</option>
+                    <option value="Sister">Sister</option>
+                    <option value="Brother">Brother</option>
+                    <option value="Others">Others</option>
+                </select>
+
+                <div class="phone-group">
+                    <span>+234</span>
+                    <input
+                        type="tel"
+                        id="trustedContactPhone"
+                        placeholder="Phone Number"
                         required
                     >
+                </div>
 
-                    <select id="language" required>
-                        <option value="">Relationship</option>
-                        <option value="">Husband</option>
-                        <option>Father</option>
-                        <option>Mother</option>
-                        <option>Uncle</option>
-                        <option>Aunt</option>
-                        <option>Sister</option>
-                        <option>Brother</option>
-                        <option>Others</option>
-                    </select>
+                <select id="trustedContactLanguage" required>
+                    <option value="">Preferred Language</option>
+                    <option value="en">English</option>
+                    <option value="yoruba">Yoruba</option>
+                    <option value="igbo">Igbo</option>
+                    <option value="hausa">Hausa</option>
+                    <option value="fr">French</option>
+                </select>
 
-                    <div class="phone-group">
-                        <span>+234</span>
-                        <input
-                            type="tel"
-                            id="phone"
-                            placeholder="Phone Number"
-                            required
-                        >
-                    </div>
+                <button class="continue-btn" type="submit">
+                    Continue
+                </button>
 
-                    <select id="language" required>
-                        <option value="">Preferred Language</option>
-                        <option>English</option>
-                        <option>Yoruba</option>
-                        <option>Igbo</option>
-                        <option>Hausa</option>
-                        <option>French</option>
-                    </select>
-                    <button class="continue-btn"
-                        type="button">
-                        Continue
-                    </button> 
+                <button class="skip-btn" type="button">
+                    Skip this step
+                </button>
 
-                    <button class="skip-btn"
-                        type="button">
-                        Skip this step
-                    </button> 
-                </form>
+            </form>
             </div>       
         </section>
     </main> 
