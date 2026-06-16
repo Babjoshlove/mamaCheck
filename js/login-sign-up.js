@@ -181,6 +181,9 @@ authForm.addEventListener("submit", async (e) => {
                 const phone = document.getElementById("phone").value.trim();
                 const state = document.getElementById("state").value.trim();
                 const lga = document.getElementById("lga").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
+                const phcName = document.getElementById("phcName").value.trim();
 
                 const fullName = `${firstName} ${lastName}`;
             endpoint = API[currentRole].register;
@@ -188,7 +191,11 @@ authForm.addEventListener("submit", async (e) => {
             payload = {
                 fullName,
                 email,
-                password
+                password,
+                phone,
+                state,
+                lga,
+                phcName
             };
         }
 
