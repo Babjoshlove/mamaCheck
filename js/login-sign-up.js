@@ -22,6 +22,7 @@ const cardText = document.querySelector(".card-header p");
 const submitBtn = document.querySelector(".submit-btn");
 
 const signupFields = document.querySelector(".signup-fields");
+// const signupInputs = signupFields ? signupFields.querySelectorAll("input") : [];
 
 const passwordInput = document.getElementById("password");
 const togglePassword = document.getElementById("togglePassword");
@@ -47,10 +48,16 @@ function updateView() {
         cardTitle.textContent = "Welcome Back";
         cardText.textContent = "Sign in to continue to your dashboard.";
         signupFields.style.display = "none";
+        // signupInputs.forEach(input => {
+        //     input.required = false;
+        // });
     } else {
         cardTitle.textContent = "Create Account";
         cardText.textContent = "Register to access the platform.";
         signupFields.style.display = "block";
+        // signupInputs.forEach(input => {
+        //     input.required = true;
+        // });
     }
 }
 
