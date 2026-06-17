@@ -13,7 +13,6 @@ const API = {
 };
 
 // DOM ELEMENTS
-
 const roleBtns = document.querySelectorAll(".role-btn");
 const tabBtns = document.querySelectorAll(".tab-btn");
 
@@ -22,42 +21,60 @@ const cardText = document.querySelector(".card-header p");
 const submitBtn = document.querySelector(".submit-btn");
 
 const signupFields = document.querySelector(".signup-fields");
-// const signupInputs = signupFields ? signupFields.querySelectorAll("input") : [];
+const phcNameGroup = document.getElementById("phcName")?.closest(".form-group");
 
 const passwordInput = document.getElementById("password");
 const togglePassword = document.getElementById("togglePassword");
-
 const authForm = document.getElementById("authForm");
 
 // STATE
-
 let currentRole = "chew";
 let currentTab = "login";
-
 
 // UI UPDATE
 function updateView() {
     const roleLabel = currentRole.toUpperCase();
 
+    // 1. Update Submit Button Text
     submitBtn.textContent =
         currentTab === "login"
             ? `Sign In as ${roleLabel}`
             : `Sign Up as ${roleLabel}`;
 
+    // 2. Query inputs dynamically inside the signup container
+    const signupInputs = signupFields ? signupFields.querySelectorAll("input") : [];
+
     if (currentTab === "login") {
         cardTitle.textContent = "Welcome Back";
         cardText.textContent = "Sign in to continue to your dashboard.";
         signupFields.style.display = "none";
-        // signupInputs.forEach(input => {
-        //     input.required = false;
-        // });
+        
+        // Disable required validation so login isn't blocked by hidden fields
+        signupInputs.forEach(input => {
+            input.required = false;
+        });
     } else {
         cardTitle.textContent = "Create Account";
         cardText.textContent = "Register to access the platform.";
         signupFields.style.display = "block";
-        // signupInputs.forEach(input => {
-        //     input.required = true;
-        // });
+        
+        // Enable required validation for visible signup fields
+        signupInputs.forEach(input => {
+            if (input.id !== "firstName" && input.id !== "lastName") {
+                input.required = true;
+            }
+        });
+
+        // 3. Admin registration does not use PHC Name
+        if (currentRole === "admin") {
+            if (phcNameGroup) phcNameGroup.style.display = "none";
+            const phcInput = document.getElementById("phcName");
+            if (phcInput) phcInput.required = false;
+        } else {
+            if (phcNameGroup) phcNameGroup.style.display = "block";
+            const phcInput = document.getElementById("phcName");
+            if (phcInput) phcInput.required = true;
+        }
     }
 }
 
@@ -93,19 +110,17 @@ tabBtns.forEach(btn => {
 if (togglePassword && passwordInput) {
     togglePassword.addEventListener("click", () => {
         passwordInput.type =
-            passwordInput.type === "password"
-                ? "text"
-                : "password";
+            passwordInput.type === "password" ? "text" : "password";
     });
 }
 
 // =============================
-// FETCH HELPER - CORRECTED
+// FETCH HELPER
 // =============================
 async function sendRequest(url, payload) {
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
 
         const response = await fetch(url, {
             method: "POST",
@@ -114,12 +129,11 @@ async function sendRequest(url, payload) {
             },
             body: JSON.stringify(payload),
             signal: controller.signal,
-            credentials: "include" // Include credentials if backend requires CORS cookies
+            credentials: "include"
         });
 
         clearTimeout(timeoutId);
 
-        // Check if response is valid JSON
         const contentType = response.headers.get("content-type");
         let data;
 
@@ -129,21 +143,17 @@ async function sendRequest(url, payload) {
             data = { message: "Invalid response format from server" };
         }
 
-        console.log("STATUS:", response.status);
-        console.log("RESPONSE:", data);
-
         if (!response.ok) {
-            throw new Error(data.message || `HTTP Error: ${response.status}`);
+            throw new Error(data.error || data.message || `HTTP Error: ${response.status}`);
         }
 
         return data;
 
     } catch (error) {
-        // Handle different types of fetch errors
         if (error.name === "AbortError") {
             throw new Error("Request timeout - Server is not responding. Please check your internet connection.");
         } else if (error instanceof TypeError) {
-            throw new Error("Network error - Failed to reach the server. Please check your internet connection and try again.");
+            throw new Error("Network error - Failed to reach the server. Please check your internet connection.");
         } else {
             throw error;
         }
@@ -164,36 +174,28 @@ authForm.addEventListener("submit", async (e) => {
         let endpoint;
         let payload;
 
-        // COMMON FIELDS
         const email = document.getElementById("email")?.value.trim();
         const password = document.getElementById("password")?.value;
 
-        // Validate email and password
         if (!email || !password) {
             throw new Error("Email and password are required");
         }
 
         // LOGIN
-  
         if (currentTab === "login") {
             endpoint = API[currentRole].login;
-
             payload = { email, password };
         }
-
         // REGISTER
-    
         else {
             const firstName = document.getElementById("firstName")?.value.trim();
             const lastName = document.getElementById("lastName")?.value.trim();
             const phone = document.getElementById("phone")?.value.trim();
             const state = document.getElementById("state")?.value.trim();
             const lga = document.getElementById("lga")?.value.trim();
-            const phcName = document.getElementById("phcName")?.value.trim();
 
-            // Validate all required fields
-            if (!firstName || !lastName || !phone || !state || !lga || !phcName) {
-                throw new Error("All fields are required for registration");
+            if (!firstName || !lastName || !phone || !state || !lga) {
+                throw new Error("All basic details are required for registration");
             }
 
             endpoint = API[currentRole].register;
@@ -205,41 +207,33 @@ authForm.addEventListener("submit", async (e) => {
                 password,
                 phone,
                 state,
-                lga,
-                phcName
+                lga
             };
+
+            // Conditionally append phcName only if registering a CHEW
+            if (currentRole === "chew") {
+                const phcName = document.getElementById("phcName")?.value.trim();
+                if (!phcName) {
+                    throw new Error("PHC Name is required for CHEW registration");
+                }
+                payload.phcName = phcName;
+            }
         }
 
-        console.log("Endpoint:", endpoint);
-        console.log("Payload:", payload);
-
         const result = await sendRequest(endpoint, payload);
-
         alert(result.message || "Success");
 
-        // =============================
-        // TOKEN HANDLING (SAFE)
-        // =============================
-        const token =
-            result.token ||
-            result.accessToken ||
-            result.data?.token;
-
+        const token = result.token || result.accessToken || result.data?.token;
         if (token) {
             localStorage.setItem("token", token);
         }
 
-        // =============================
-        // REDIRECT AFTER LOGIN
-        // =============================
         if (currentTab === "login") {
-            window.location.href =
-                currentRole === "chew"
-                    ? "overview.html"
-                    : "mama-check.html";
+            window.location.href = currentRole === "chew" ? "overview.html" : "mama-check.html";
         }
 
         authForm.reset();
+        updateView();
 
     } catch (error) {
         console.error("AUTH ERROR:", error);

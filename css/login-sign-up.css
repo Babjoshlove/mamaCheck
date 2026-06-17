@@ -96,7 +96,7 @@ body{
 
 .label-text{
     display:block;
-    font-size:0.8rem;
+    font-size:1rem;
     color:#888;
     margin-bottom:.8rem;
     letter-spacing:1px;
@@ -159,6 +159,7 @@ body{
     display:block;
     margin-bottom:0.5rem;
     font-weight:500;
+    font-size:1rem;
 }
 
 .form-group input{
@@ -183,7 +184,7 @@ body{
 .password-header a{
     text-decoration:none;
     color:#522b8f;
-    font-size:.85rem;
+    font-size:1rem;
 }
 
 .submit-btn{
