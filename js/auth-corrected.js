@@ -234,8 +234,8 @@ authForm.addEventListener("submit", async (e) => {
         // =============================
         if (currentTab === "login") {
             window.location.href =
-                currentRole === "admin"
-                    ? "admin-dashboard.html"
+                currentRole === "chew"
+                    ? "overview.html"
                     : "mama-check.html";
         }
 
