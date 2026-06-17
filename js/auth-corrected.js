@@ -1,3 +1,4 @@
+
 const BASE_URL = "https://mama-check.onrender.com";
 
 // API ENDPOINTS
@@ -228,9 +229,8 @@ authForm.addEventListener("submit", async (e) => {
             localStorage.setItem("token", token);
         }
 
-        if (currentTab === "login") {
-            window.location.href = currentRole === "chew" ? "overview.html" : "mama-check.html";
-        }
+        // UPDATED: Proper routing for both Login and Registration actions
+        window.location.href = currentRole === "chew" ? "mama-check.html" : "overview.html";
 
         authForm.reset();
         updateView();
