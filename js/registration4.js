@@ -1,5 +1,8 @@
-const inputs = document.querySelectorAll('.otp-input');
+const verifyBtn = document.querySelector(".verify-btn");
+const otpInputs = document.querySelectorAll(".otp-input");
 
+// Auto-focus logic for OTP inputs
+const inputs = document.querySelectorAll('.otp-input');
 inputs.forEach((input, index) => {
     input.addEventListener('input', () => {
         if (input.value.length === 1 && index < inputs.length - 1) {
@@ -7,10 +10,6 @@ inputs.forEach((input, index) => {
         }
     });
 });
-
-
-const verifyBtn = document.querySelector(".verify-btn");
-const otpInputs = document.querySelectorAll(".otp-input");
 
 verifyBtn.addEventListener("click", async () => {
     const otp = [...otpInputs]
@@ -26,72 +25,80 @@ verifyBtn.addEventListener("click", async () => {
         localStorage.getItem("registrationData")
     );
 
-    if (!registrationData) {
-        alert("Registration data not found.");
+    if (!registrationData || !registrationData.phone) {
+        alert("Registration or phone data not found.");
         return;
     }
 
     try {
         verifyBtn.disabled = true;
-        verifyBtn.textContent = "Verifying...";
+        verifyBtn.textContent = "Verifying OTP...";
 
-        // Add OTP to registration payload
-        const payload = {
-            ...registrationData,
-            otp
-        };
+        ---
+        // STEP 1: Verify the OTP first
+        ---
+        const verifyResponse = await fetch(
+            "https://mama-check.onrender.com/api/v1/auth/verify-otp",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    phone: registrationData.phone, // Extracts phone from stored data
+                    otp: otp
+                })
+            }
+        );
 
-        const response = await fetch(
+        let verifyData;
+        try {
+            verifyData = await verifyResponse.json();
+        } catch {
+            verifyData = { message: "Unable to read verification response." };
+        }
+
+        if (!verifyResponse.ok) {
+            alert(verifyData.message || "OTP verification failed. Please try again.");
+            return; // Stop here if OTP is invalid
+        }
+
+        ---
+        // STEP 2: Proceed to Registration if OTP is verified successfully
+        ---
+        verifyBtn.textContent = "Registering...";
+
+        const registerResponse = await fetch(
             "https://mama-check.onrender.com/api/v1/pregnancies/register",
             {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(registrationData) // Sends the full registration payload
             }
         );
 
-        let data;
-
+        let registerData;
         try {
-            data = await response.json();
+            registerData = await registerResponse.json();
         } catch {
-            data = {
-                message: "Unable to read server response."
-            };
+            registerData = { message: "Unable to read registration response." };
         }
 
-                if (response.ok) {
-                    alert("Registration successful!");
+        if (registerResponse.ok) {
+            alert("Registration successful!");
 
-                    localStorage.setItem(
-                        "registeredMother",
-                        JSON.stringify(data)
-                    );
+            localStorage.setItem(
+                "registeredMother",
+                JSON.stringify(registerData)
+            );
 
-                    localStorage.removeItem("registrationData");
-
-                    window.location.replace("overview.html");
-                } else {
-                    alert(data.message || "Registration failed.");
-                }
-
-//         if (response.ok) {
-//             alert("Registration successful!");
-
-//             localStorage.setItem(
-//                 "registeredMother",
-//                 JSON.stringify(data)
-//             );
-
-//             localStorage.removeItem("registrationData");
-
-//             // Redirect to dashboard
-//             // window.location.href = "overview.html";
-//         } else {
-//             alert(data.message || "Registration failed.");
-//         }
+            localStorage.removeItem("registrationData");
+            window.location.replace("overview.html");
+        } else {
+            alert(registerData.message || "Registration failed.");
+        }
 
     } catch (error) {
         console.error("Error:", error);
