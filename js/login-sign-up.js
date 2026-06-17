@@ -134,18 +134,17 @@ authForm.addEventListener("submit", async (e) => {
         const email = document.getElementById("email")?.value.trim();
         const password = document.getElementById("password")?.value;
 
-        // =============================
+     
         // LOGIN
-        // =============================
+  
         if (currentTab === "login") {
             endpoint = API[currentRole].login;
 
             payload = { email, password };
         }
 
-        // =============================
         // REGISTER
-        // =============================
+    
         else {
             const firstName = document.getElementById("firstName")?.value.trim();
             const lastName = document.getElementById("lastName")?.value.trim();

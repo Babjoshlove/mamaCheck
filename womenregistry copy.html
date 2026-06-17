@@ -16,8 +16,8 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/womenregistry.css">
-    <script src="js/womenregistry.js" defer></script>
+    <!-- <link rel="stylesheet" href="css/womenregistry.css">
+    <script src="js/womenregistry.js" defer></script> -->
 
 </head>
 <body>
@@ -38,53 +38,60 @@
 
     </header>
     <main class="main-container">
-        <aside class="left">
-            
-            <div class="left-container">
-                <!--Main under the left container-->
-                <div class="main-sub">MAIN</div>
-
-                <div class="overview">
-                    <img src="images/mage_dashboard.svg" alt="">
-                    <h3>Overview</h3>
-                </div>
-                <div class="registry">
-                    <img src="images/mdi_register-outline.svg" alt="pregnant-woman">
-                    <h3>Women Registry</h3>
-                </div>
-                <div class="tracker">
-                    <img src="images/hugeicons_appointment-02.svg" alt="pregnant woman">
-                    <a href="ancTracker.html"><h3>ANC Tracker</h3></a>
-                </div>
-
-                <!---Alerts-->
-                <div class="main-sub">ALERTS</div>
-                <div class="alert">
-                    <img src="images/mingcute_alert-line.svg" alt="">
-                    <h3>Red Flag Alerts</h3>
-                </div>
-                <div class="summary">
-                    <img src="images/chart-square-bar.svg" alt="pregnant-woman">
-                    <h3>Weekly Summary</h3>
-                </div>
-
-                <div class="main-sub">ACTIONS</div>
-                <div class="action-enroll">
-                    <img src="images/Icon.svg" alt="pregnant-woman">
-                    <h3>Enroll New Mama</h3>
-                </div>
-
-                <!-- user profile & info -->
-                <div class="user-profile">
-                    <div class="profile"><h3>NK</h3></div>
-                        <!-- user info -->
-                        <div class="info">
-                            <h5 id="firstName">Nurse Ngozi Kalu</h5>
-                            <p id="phcName">Awka Central PHC</p>
-                        </div>
+        <!-- aside bar -->
+     <aside>
+    
+         <div class="main-wrapper">
+            <!-- mamacheck logo -->
+             <div class="mamacheck-logo">
+            <img src="/images/image 11.svg" alt="mamacheck-logo">
+            <p>CHEW Dashboard . Pilot</p>
+        </div>
+           <!-- nav container -->
+            <nav>
+                <div class="main-container">
+                    <div class="main">
+                    <p>MAIN</p></div>
+                    <div class="main-sub">
+                         <a href="overview.html" class="sub">
+                        <img src="images/mage_dashboard.svg" alt="dashboardImage">Overview</a>
+               
+                    <a href="#" class="sub">
+                        <img src="images/mdi_register-outline.svg" alt="registryImage">Women Registry</a>
+                
+                    <a href="#" class="sub">
+                        <img src="images/hugeicons_appointment-02.svg" alt="appointmentImage">ANC Tracker</a>
                     </div>
-            </div>
-        </aside>
+                </div>
+               <!-- alerts container -->
+                <div class="alerts-container">
+                    <div class="alerts"><p>Alerts</p></div>
+                    <div class="alerts-sub">
+                        <a href="redFlagAlerts.html" class="sub red">
+                        <img src="images/mingcute_alert-line.svg" alt="alertImage">Red Flag Alerts <span>3</span></a>
+                    <a href="weeklySummary.html" class="sub">
+                        <img src="images/chart-square-bar.svg" alt="chartImage">Weekly Summary</a>
+                    </div>
+                </div>
+               <!-- actions container -->
+                <div class="actions-container">
+                    <div class="actions"><p>Actions</p></div>
+                     <a href="#" class="sub">
+                        <img src="images/Icon.svg" alt="plusImage">Enroll New Mama</a>
+                </div>
+            </nav>
+         </div>
+        
+         <!-- user profile & info -->
+          <div class="user-profile">
+            <div class="profile"><h3>NK</h3></div>
+            <!-- user info -->
+             <div class="info">
+                <h5>Nurse Ngozi Kalu</h5>
+                <p>Awka Central PHC</p>
+             </div>
+          </div>
+     </aside>
         <section class="right">
             <div class="inner-container">
 

@@ -1,52 +1,11 @@
-// Women data
-const women = [
-  {
-    name: "Adaeze Okonkwo",
-    location: "Lagos",
-    phone: "+234 803 211 0045",
-    week: "Wk 28",
-    language: "Igbo",
-    progress: 30,
-    nextVisit: "18 May 2026",
-    status: "Red Alert"
-  },
-  {
-    name: "Amina Bello",
-    location: "Abuja",
-    phone: "+234 805 123 4567",
-    week: "Wk 24",
-    language: "Hausa",
-    progress: 55,
-    nextVisit: "20 May 2026",
-    status: "Blue Alert"
-  },
-  {
-    name: "Chioma Eze",
-    location: "Enugu",
-    phone: "+234 807 765 4321",
-    week: "Wk 32",
-    language: "Igbo",
-    progress: 90,
-    nextVisit: "22 May 2026",
-    status: "Red Alert"
-  },
-  {
-    name: "james busola",
-    location:"Oyo",
-    phone: "+234 813 919 3712",
-    week: "wk 1",
-    language:"Yoruba",
-    progress:"98",
-    nextVisit:"1 june 2026",
-    status:"Red Alert"
-  }
-];
+const BASE_URL = "https://mama-check.onrender.com";
 const womenList = document.getElementById("women-list");
 
-function getAlertStatus(progress) {
+// ALERT LOGIC
+function getAlertStatus(progress = 0) {
   if (progress >= 80) {
     return {
-      text: "Red Alert",
+      text: "Red Flag",
       bgColor: "#FEE2E2",
       textColor: "#DC2626",
       progressColor: "#DC2626"
@@ -55,7 +14,7 @@ function getAlertStatus(progress) {
 
   if (progress >= 51) {
     return {
-      text: "Blue Alert",
+      text: "Warning",
       bgColor: "#DBEAFE",
       textColor: "#2563EB",
       progressColor: "#2563EB"
@@ -63,68 +22,102 @@ function getAlertStatus(progress) {
   }
 
   return {
-    text: "Green Alert",
+    text: "Normal",
     bgColor: "#DCFCE7",
     textColor: "#16A34A",
     progressColor: "#16A34A"
   };
 }
 
-function renderWomen() {
-  women.forEach(woman => {
-    const alert = getAlertStatus(woman.progress);
+// CREATE CARD
+function createWomanCard(woman) {
+  const fullName = `${woman.firstName || ""} ${woman.lastName || ""}`.trim();
 
-    const card = document.createElement("div");
-    card.classList.add("profile-details");
+  const progress = Number(woman.progress || 0);
+  const alert = getAlertStatus(progress);
 
-    card.innerHTML = `
-      <div class="card-name">
-        <h2>${woman.name}</h2>
-        <h4>${woman.location}</h4>
+  const card = document.createElement("div");
+  card.className = "profile-details";
+
+  card.innerHTML = `
+    <div class="card-name">
+      <h2>${fullName || "N/A"}</h2>
+      <h4>${woman.state || "N/A"}</h4>
+    </div>
+
+    <div class="card-number">
+      ${woman.phone || "N/A"}
+    </div>
+
+    <div class="card-week">
+      ${woman.week || "N/A"}
+    </div>
+
+    <div class="card-lang">
+      ${woman.language || "N/A"}
+    </div>
+
+    <div class="anc-metrics">
+      <div class="metrics" style="width:${progress}%; background:${alert.progressColor};"></div>
+    </div>
+
+    <div>
+      ${woman.nextVisit || "N/A"}
+    </div>
+
+    <div class="btn-visit">
+      <div class="card-nextvisit" style="background:${alert.bgColor}; color:${alert.textColor};">
+        ${alert.text}
       </div>
 
-      <div class="card-number">
-        ${woman.phone}
+      <div class="card-view-btn" data-id="${woman.id || ""}">
+        View
       </div>
+    </div>
+  `;
 
-      <div class="card-week">
-        ${woman.week}
-      </div>
-
-      <div class="card-lang">
-        ${woman.language}
-      </div>
-
-      <div class="anc-metrics">
-        <div
-          class="metrics"
-          style="
-            width:${woman.progress}%;
-            background:${alert.progressColor};
-          ">
-        </div>
-      </div>
-
-      <div>${woman.nextVisit}</div>
-
-      <div class="btn-visit">
-        <div
-          class="card-nextvisit"
-          style="
-            background:${alert.bgColor};
-            color:${alert.textColor};
-          ">
-          ${alert.text}
-        </div>
-
-        <div class="card-view-btn">
-          View
-        </div>
-      </div>
-    `;
-
-    womenList.appendChild(card);
-  });
+  return card;
 }
 
-renderWomen();
+// FETCH DATA
+async function fetchWomen() {
+  try {
+    womenList.innerHTML = "<p>Loading...</p>";
+
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/v1/pregnancies/register`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error: ${res.status}`);
+    }
+
+    const result = await res.json();
+
+    const women = Array.isArray(result) ? result : result.data || [];
+
+    womenList.innerHTML = "";
+
+    if (women.length === 0) {
+      womenList.innerHTML = "<p>No registered women found.</p>";
+      return;
+    }
+
+    women.forEach(woman => {
+      womenList.appendChild(createWomanCard(woman));
+    });
+
+  } catch (error) {
+    console.error("Fetch error:", error);
+    womenList.innerHTML = "<p style='color:red;'>Failed to load data</p>";
+  }
+}
+
+// INIT
+document.addEventListener("DOMContentLoaded", fetchWomen);
