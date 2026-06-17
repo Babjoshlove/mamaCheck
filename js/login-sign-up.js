@@ -13,6 +13,7 @@ const API = {
 };
 
 // DOM ELEMENTS
+
 const roleBtns = document.querySelectorAll(".role-btn");
 const tabBtns = document.querySelectorAll(".tab-btn");
 
@@ -21,102 +22,20 @@ const cardText = document.querySelector(".card-header p");
 const submitBtn = document.querySelector(".submit-btn");
 
 const signupFields = document.querySelector(".signup-fields");
-const signupInputs = signupFields ? signupFields.querySelectorAll("input") : [];
+// const signupInputs = signupFields ? signupFields.querySelectorAll("input") : [];
 
-const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const togglePassword = document.getElementById("togglePassword");
 
 const authForm = document.getElementById("authForm");
 
 // STATE
+
 let currentRole = "chew";
 let currentTab = "login";
 
-// =============================
-// VALIDATION HELPERS
-// =============================
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
 
-function validateLoginForm() {
-    const email = emailInput?.value.trim();
-    const password = passwordInput?.value;
-
-    if (!email || !password) {
-        throw new Error("Email and password are required");
-    }
-
-    if (!isValidEmail(email)) {
-        throw new Error("Please enter a valid email address");
-    }
-
-    if (password.length < 6) {
-        throw new Error("Password must be at least 6 characters");
-    }
-
-    return { email, password };
-}
-
-function validateSignupForm() {
-    const firstName = document.getElementById("firstName")?.value.trim();
-    const lastName = document.getElementById("lastName")?.value.trim();
-    const email = emailInput?.value.trim();
-    const password = passwordInput?.value;
-    const phone = document.getElementById("phone")?.value.trim();
-    const state = document.getElementById("state")?.value.trim();
-    const lga = document.getElementById("lga")?.value.trim();
-    const phcName = document.getElementById("phcName")?.value.trim();
-
-    if (!firstName || !lastName) {
-        throw new Error("First and last names are required");
-    }
-
-    if (!email) {
-        throw new Error("Email is required");
-    }
-
-    if (!isValidEmail(email)) {
-        throw new Error("Please enter a valid email address");
-    }
-
-    if (!password || password.length < 6) {
-        throw new Error("Password must be at least 6 characters");
-    }
-
-    if (!phone) {
-        throw new Error("Phone number is required");
-    }
-
-    if (!state) {
-        throw new Error("State is required");
-    }
-
-    if (!lga) {
-        throw new Error("LGA is required");
-    }
-
-    if (!phcName) {
-        throw new Error("PHC name is required");
-    }
-
-    return {
-        firstName,
-        lastName,
-        email,
-        password,
-        phone,
-        state,
-        lga,
-        phcName
-    };
-}
-
-// =============================
 // UI UPDATE
-// =============================
 function updateView() {
     const roleLabel = currentRole.toUpperCase();
 
@@ -129,16 +48,16 @@ function updateView() {
         cardTitle.textContent = "Welcome Back";
         cardText.textContent = "Sign in to continue to your dashboard.";
         signupFields.style.display = "none";
-        signupInputs.forEach(input => {
-            input.required = false;
-        });
+        // signupInputs.forEach(input => {
+        //     input.required = false;
+        // });
     } else {
         cardTitle.textContent = "Create Account";
         cardText.textContent = "Register to access the platform.";
         signupFields.style.display = "block";
-        signupInputs.forEach(input => {
-            input.required = true;
-        });
+        // signupInputs.forEach(input => {
+        //     input.required = true;
+        // });
     }
 }
 
@@ -174,7 +93,9 @@ tabBtns.forEach(btn => {
 if (togglePassword && passwordInput) {
     togglePassword.addEventListener("click", () => {
         passwordInput.type =
-            passwordInput.type === "password" ? "text" : "password";
+            passwordInput.type === "password"
+                ? "text"
+                : "password";
     });
 }
 
@@ -182,29 +103,24 @@ if (togglePassword && passwordInput) {
 // FETCH HELPER
 // =============================
 async function sendRequest(url, payload) {
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
 
-        const data = await response.json();
+    const data = await response.json();
 
-        console.log("STATUS:", response.status);
-        console.log("RESPONSE:", data);
+    console.log("STATUS:", response.status);
+    console.log("RESPONSE:", data);
 
-        if (!response.ok) {
-            throw new Error(data.message || `Request failed with status ${response.status}`);
-        }
-
-        return data;
-    } catch (error) {
-        console.error("FETCH ERROR:", error);
-        throw error;
+    if (!response.ok) {
+        throw new Error(data.message || "Request failed");
     }
+
+    return data;
 }
 
 // =============================
@@ -221,59 +137,77 @@ authForm.addEventListener("submit", async (e) => {
         let endpoint;
         let payload;
 
-        // VALIDATE AND GET FORM DATA
+        // COMMON FIELDS
+        const email = document.getElementById("email")?.value.trim();
+        const password = document.getElementById("password")?.value;
+
+     
+        // LOGIN
+  
         if (currentTab === "login") {
-            payload = validateLoginForm();
             endpoint = API[currentRole].login;
-        } else {
-            payload = validateSignupForm();
+
+            payload = { email, password };
+        }
+
+        // REGISTER
+    
+        else {
+            const firstName = document.getElementById("firstName")?.value.trim();
+            const lastName = document.getElementById("lastName")?.value.trim();
+            const phone = document.getElementById("phone")?.value.trim();
+            const state = document.getElementById("state")?.value.trim();
+            const lga = document.getElementById("lga")?.value.trim();
+            const phcName = document.getElementById("phcName")?.value.trim();
+
             endpoint = API[currentRole].register;
+
+            payload = {
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                state,
+                lga,
+                phcName
+            };
         }
 
         console.log("Endpoint:", endpoint);
         console.log("Payload:", payload);
 
-        // SEND REQUEST
         const result = await sendRequest(endpoint, payload);
 
-        console.log("SUCCESS RESPONSE:", result);
+        alert(result.message || "Success");
 
-        // EXTRACT TOKEN
+        // =============================
+        // TOKEN HANDLING (SAFE)
+        // =============================
         const token =
             result.token ||
             result.accessToken ||
-            result.data?.token ||
-            result.authorization?.token;
+            result.data?.token;
 
         if (token) {
             localStorage.setItem("token", token);
-            localStorage.setItem("role", currentRole);
-            console.log("Token saved to localStorage");
         }
 
-        // SHOW SUCCESS MESSAGE
-        alert(result.message || "Success! Redirecting...");
-
+        // =============================
         // REDIRECT AFTER LOGIN
+        // =============================
         if (currentTab === "login") {
-            const redirectUrl =
+            window.location.href =
                 currentRole === "admin"
-                    ? "overview.html"
+                    ? "admin-dashboard.html"
                     : "mama-check.html";
-            window.location.href = redirectUrl;
-        } else {
-            // After signup, reset form and switch to login
-            authForm.reset();
-            tabBtns.forEach(b => b.classList.remove("active"));
-            tabBtns[0].classList.add("active");
-            currentTab = "login";
-            updateView();
-            alert("Account created successfully! Please sign in.");
         }
+
+        authForm.reset();
 
     } catch (error) {
         console.error("AUTH ERROR:", error);
-        alert(error.message || "An error occurred. Please try again.");
+        alert(error.message || "Something went wrong");
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
