@@ -159,3 +159,125 @@ html{
     align-items: center;
     gap: 2rem;
 }
+
+
+
+
+
+
+
+
+
+
+.tracker-container{
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+    margin-top:5rem;
+}
+
+.card{
+    width:420px;
+    background:#fff;
+    border-radius:14px;
+    padding:18px;
+}
+
+/* .due-card{
+    border:3px solid #38a9ff;
+} */
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.card-header h3{
+    font-size:18px;
+    color:#222;
+    font-weight:700;
+}
+
+.pill{
+    font-size:11px;
+    font-weight:600;
+    padding:5px 12px;
+    border-radius:20px;
+}
+
+.purple{
+    background:#f1e9ff;
+    color:#8c56ff;
+}
+
+.red{
+    background:#ffecec;
+    color:#ff7b7b;
+}
+
+.patient-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-top:1px solid #f0f0f0;
+}
+
+.patient-info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.icon{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:#f0e8ff;
+    color:#8c56ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+}
+
+.icon.missed{
+    background:#ffeaea;
+    color:#ff7a7a;
+    font-weight:bold;
+}
+
+.patient-info h4{
+    font-size:13px;
+    color:#333;
+    margin-bottom:3px;
+}
+
+.patient-info p{
+    font-size:11px;
+    color:#9a9a9a;
+}
+
+.mark-btn{
+    border:none;
+    background:#2ec84f;
+    color:#fff;
+    padding:8px 18px;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:600;
+}
+
+.remind-btn{
+    border:none;
+    background:#f3edff;
+    color:#8c56ff;
+    padding:8px 16px;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:600;
+}
