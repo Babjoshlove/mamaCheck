@@ -1,5 +1,4 @@
 
-
 const dateElement = document.getElementById("date");
 
 function formatDate() {

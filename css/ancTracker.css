@@ -132,7 +132,7 @@ html{
     /* margin-bottom: 2rem; */
 }
 .tracker a,.overview a,
-.registry a, .alert a ,.summary a{
+.registry a, .alert a ,.summary a, .action-enroll a{
     text-decoration: none;
     color: #FFFFFF;
 }

@@ -1,123 +1,197 @@
-const BASE_URL = "https://mama-check.onrender.com";
+const dateElement = document.getElementById("date");
+
+function formatDate() {
+  const options = {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  };
+
+  const today = new Date();
+  return today.toLocaleDateString("en-US", options);
+}
+
+dateElement.textContent = formatDate();
+
+
+
+
 const womenList = document.getElementById("women-list");
 
-// ALERT LOGIC
-function getAlertStatus(progress = 0) {
+/* =========================
+   DUMMY DATA
+========================= */
+const womenData = [
+  {
+    id: 1,
+    name: "Success Olamide",
+    location: "Lagos",
+    phone: "+234 803 211 0045",
+    week: 28,
+    language: "Igbo",
+    progress: 85,
+    date: "18 May 2026"
+  },
+  {
+    id: 2,
+    name: "Salam Yusuf",
+    location: "Ikeja",
+    phone: "+234 805 111 2222",
+    week: 24,
+    language: "Hausa",
+    progress: 20,
+    date: "20 May 2026"
+  },
+  {
+    id: 3,
+    name: "Ngozi Kalu",
+    location: "Surulere",
+    phone: "+234 802 999 1111",
+    week: 18,
+    language: "Igbo",
+    progress: 10,
+    date: "20 May 2026"
+  },
+  {
+    id: 4,
+    name: "Chioma Eze",
+    location: "Ikeja",
+    phone: "+234 805 332 7781",
+    week: 24,
+    language: "Hausa",
+    progress: 70,
+    date: "20 May 2026"
+  },
+  {
+    id: 5,
+    name: "Thanks promise",
+    location: "Ikeja",
+    phone: "+234 805 111 2222",
+    week: 24,
+    language: "Hausa",
+    progress: 85,
+    date: "20 May 2026"
+  },
+  {
+    id: 6,
+    name: "Anuoluwa Maryam",
+    location: "Ota",
+    phone: "+234 805 111 2222",
+    week: 24,
+    language: "pigin",
+    progress: 20,
+    date: "20 May 2026"
+  }
+];
+
+/* =========================
+   STATUS SYSTEM (ONE SOURCE OF TRUTH)
+========================= */
+function getStatus(progress) {
   if (progress >= 80) {
     return {
-      text: "Red Flag",
-      bgColor: "#FEE2E2",
-      textColor: "#DC2626",
-      progressColor: "#DC2626"
+      label: "Safe",
+      color: "#16A34A",
+      bg: "#DCFCE7"
     };
   }
 
-  if (progress >= 51) {
+  if (progress >= 40) {
     return {
-      text: "Warning",
-      bgColor: "#DBEAFE",
-      textColor: "#2563EB",
-      progressColor: "#2563EB"
+      label: "Not Severe",
+      color: "#2563EB",
+      bg: "#DBEAFE"
+    };
+  }
+
+  if (progress >= 20) {
+    return {
+      label: "Severe",
+      color: "#FBBF24",
+      bg: "#FEF9C3"
     };
   }
 
   return {
-    text: "Normal",
-    bgColor: "#DCFCE7",
-    textColor: "#16A34A",
-    progressColor: "#16A34A"
+    label: "Red Alert",
+    color: "#DC2626",
+    bg: "#FEE2E2"
   };
 }
 
-// CREATE CARD
-function createWomanCard(woman) {
-  const fullName = `${woman.firstName || ""} ${woman.lastName || ""}`.trim();
+/* =========================
+   VIEW DETAILS
+========================= */
+function viewWoman(id) {
+  const woman = womenData.find(w => w.id === id);
+  if (!woman) return;
 
-  const progress = Number(woman.progress || 0);
-  const alert = getAlertStatus(progress);
-
-  const card = document.createElement("div");
-  card.className = "profile-details";
-
-  card.innerHTML = `
-    <div class="card-name">
-      <h2>${fullName || "N/A"}</h2>
-      <h4>${woman.state || "N/A"}</h4>
-    </div>
-
-    <div class="card-number">
-      ${woman.phone || "N/A"}
-    </div>
-
-    <div class="card-week">
-      ${woman.week || "N/A"}
-    </div>
-
-    <div class="card-lang">
-      ${woman.language || "N/A"}
-    </div>
-
-    <div class="anc-metrics">
-      <div class="metrics" style="width:${progress}%; background:${alert.progressColor};"></div>
-    </div>
-
-    <div>
-      ${woman.nextVisit || "N/A"}
-    </div>
-
-    <div class="btn-visit">
-      <div class="card-nextvisit" style="background:${alert.bgColor}; color:${alert.textColor};">
-        ${alert.text}
-      </div>
-
-      <div class="card-view-btn" data-id="${woman.id || ""}">
-        View
-      </div>
-    </div>
-  `;
-
-  return card;
+  alert(
+    `Name: ${woman.name}
+Location: ${woman.location}
+Week: ${woman.week}
+Phone: ${woman.phone}`
+  );
 }
 
-// FETCH DATA
-async function fetchWomen() {
-  try {
-    womenList.innerHTML = "<p>Loading...</p>";
+/* =========================
+   RENDER FUNCTION
+========================= */
+function renderWomenList() {
+  womenList.innerHTML = "";
 
-    const token = localStorage.getItem("token");
+  womenData.forEach((woman) => {
+    const status = getStatus(woman.progress);
 
-    const res = await fetch(`${BASE_URL}/api/v1/pregnancies/register`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const card = document.createElement("div");
+    card.className = "profile-details";
 
-    if (!res.ok) {
-      throw new Error(`HTTP error: ${res.status}`);
-    }
+    card.innerHTML = `
+      <div class="card-name">
+        <h2>${woman.name}</h2>
+        <h4>${woman.location}</h4>
+      </div>
 
-    const result = await res.json();
+      <div class="card-number">
+        ${woman.phone}
+      </div>
 
-    const women = Array.isArray(result) ? result : result.data || [];
+      <div class="card-week">
+        Wk ${woman.week}
+      </div>
 
-    womenList.innerHTML = "";
+      <div class="card-lang">
+        ${woman.language}
+      </div>
 
-    if (women.length === 0) {
-      womenList.innerHTML = "<p>No registered women found.</p>";
-      return;
-    }
+      <div class="anc-metrics">
+        <div class="metrics"
+          style="width:${woman.progress}%; background:${status.color};">
+        </div>
+      </div>
 
-    women.forEach(woman => {
-      womenList.appendChild(createWomanCard(woman));
-    });
+      <div class="card-date">
+        ${woman.date}
+      </div>
 
-  } catch (error) {
-    console.error("Fetch error:", error);
-    womenList.innerHTML = "<p style='color:red;'>Failed to load data</p>";
-  }
+      <div class="btn-visit">
+        <div class="card-nextvisit"
+          style="background:${status.bg}; color:${status.color};">
+          ${status.label}
+        </div>
+
+        <div class="card-view-btn" onclick="viewWoman(${woman.id})">
+          View
+        </div>
+      </div>
+    `;
+
+    womenList.appendChild(card);
+  });
 }
 
-// INIT
-document.addEventListener("DOMContentLoaded", fetchWomen);
+/* =========================
+   INIT
+========================= */
+renderWomenList();

@@ -18,6 +18,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/womenregistry.css">
     <script src="js/womenregistry.js" defer></script>
+    
     <link rel="icon" href="images/image 11.svg" type="image/svg+xml">
 
 </head>
@@ -33,7 +34,7 @@
                 <input type="text" placeholder="Search...">
             </div>
             <div>
-                <h2>Fri, 15 May 2026</h2>
+                <h2 id="date">Fri, 15 May 2026</h2>
             </div>
         </div>
 
@@ -47,11 +48,11 @@
 
                 <div class="overview">
                     <img src="images/mage_dashboard.svg" alt="">
-                    <h3>Overview</h3>
+                    <a href="overview.html"><h3>Overview</h3></a>
                 </div>
                 <div class="registry">
                     <img src="images/mdi_register-outline.svg" alt="pregnant-woman">
-                    <h3>Women Registry</h3>
+                    <a href="womenregistry.html"><h3>Women Registry</h3></a>
                 </div>
                 <div class="tracker">
                     <img src="images/hugeicons_appointment-02.svg" alt="pregnant woman">
@@ -62,17 +63,17 @@
                 <div class="main-sub">ALERTS</div>
                 <div class="alert">
                     <img src="images/mingcute_alert-line.svg" alt="">
-                    <h3>Red Flag Alerts</h3>
+                    <a href="redflagalerts.html"><h3>Red Flag Alerts</h3></a>
                 </div>
                 <div class="summary">
                     <img src="images/chart-square-bar.svg" alt="pregnant-woman">
-                    <h3>Weekly Summary</h3>
+                    <a href="weeklysummary.html"><h3>Weekly Summary</h3></a>
                 </div>
 
                 <div class="main-sub">ACTIONS</div>
                 <div class="action-enroll">
                     <img src="images/Icon.svg" alt="pregnant-woman">
-                    <h3>Enroll New Mama</h3>
+                    <a href="mama-check.html"><h3>Enroll New Mama</h3></a>
                 </div>
 
                 <!-- user profile & info -->
@@ -113,12 +114,14 @@
                     <div>LANGUAGE</div>
                     <div>ANC PROGRESS</div>
                     <div>NEXT VISIT</div>
-                    <div>STATUS</div>
+                    <div>LAST CHECKING 
+                        RESPONSE
+                    </div>
                 </div> 
 
                 <div id="women-list" ></div>
-                <!--
-                <div class="profile-details">
+            
+                <!-- <div class="profile-details">
                     <div class="card-name">
                         <h2>Adaeze Okonkwo</h2>
                         <h4>lagos</h4>
@@ -290,7 +293,7 @@
                         <div class="card-view-btn">
                             View
                         </div>
-                    </div>
+                    </div> 
                 </div> -->
             </div>
         </section>
