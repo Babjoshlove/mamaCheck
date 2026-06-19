@@ -295,9 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function personalizeCHEWProfile() {
     // Read the explicit keys provided during registration from localStorage
-    const firstName = localStorage.getItem("firstName") || "Ngozi";
-    const lastName = localStorage.getItem("lastName") || "Kalu";
-    const phcName = localStorage.getItem("phcName") || "Awka Central PHC";
+    const firstName = localStorage.getItem("firstName") || "";
+    const lastName = localStorage.getItem("lastName") || "";
+    const phcName = localStorage.getItem("phcName") || "";
     
     // Combine names cleanly
     const fullTitle = `Nurse ${firstName} ${lastName}`;
