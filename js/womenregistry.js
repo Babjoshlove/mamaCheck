@@ -1,4 +1,11 @@
+function goToEnrollPage() {
+    window.location.href = "mama-check.html";
+}
+
 const dateElement = document.getElementById("date");
+const totalWomenElement = document.getElementById("totalWomen");
+const redFlagsElement = document.getElementById("redFlags");
+const dueThisWeekElement = document.getElementById("dueThisWeek");
 
 function formatDate() {
   const options = {

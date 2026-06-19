@@ -307,7 +307,7 @@ body{
 }
 
 .message-card{
-*/  align-items: center;
+    align-items: center;
     position: absolute;
     bottom: 11rem;
     right: 3rem;
