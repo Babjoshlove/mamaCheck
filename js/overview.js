@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Elements Selection
   const profileAvatar = document.getElementById("profile-avatar");
-  const profileName = document.q(".profile-name");
+  const profileName = document.querySelector(".profile-name");
   const profilePhc = document.getElementById("profile-phc");
   const mainGreeting = document.getElementById("main-greeting");
   const dateDisplay = document.getElementById("date");
