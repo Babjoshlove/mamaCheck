@@ -397,7 +397,7 @@ function initializeEnrollButton() {
     const enrollBtn = document.querySelector(".enroll-btn");
     if (enrollBtn) {
         enrollBtn.addEventListener("click", () => {
-            window.location.href = "/registeration1.html";
+            window.location.href = "/registration1.html";
         });
     }
 }
