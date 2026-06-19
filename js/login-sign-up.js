@@ -218,3 +218,10 @@ authForm.addEventListener("submit", async (e) => {
 // INIT
 // =============================
 updateView();
+
+
+// Add inside your registration form handler after getting response:
+localStorage.setItem("accessToken", responseData.token);
+localStorage.setItem("firstName", responseData.user.firstName); // e.g. "Sumayyah"
+localStorage.setItem("lastName", responseData.user.lastName);   // e.g. "Aliyu"
+localStorage.setItem("phcName", responseData.user.phcName);     // e.g. "Central PHC Ikeja"

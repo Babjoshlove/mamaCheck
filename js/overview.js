@@ -274,17 +274,16 @@
 // dateElement.textContent = formatDate();
 
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize standard layout elements
+    // 1. Personalize User Profile using Registration Data
+    personalizeCHEWProfile();
     initializeDate();
     initializeSidebarNavigation();
     
-    // Fetch and populate live data from API
+    // 2. Fetch Live Summary Data from API
     fetchDashboardOverview();
 
-    // Attach interaction listeners
+    // 3. Attach Interactive Event Listeners
     initializeSearch();
     initializeEnrollButton();
     initializeViewButtons();
@@ -292,7 +291,45 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Updates the UI with current date
+ * Dynamically updates the greeting, profile name, and initials matching registration values
+ */
+function personalizeCHEWProfile() {
+    // Read the explicit keys provided during registration from localStorage
+    const firstName = localStorage.getItem("firstName") || "Ngozi";
+    const lastName = localStorage.getItem("lastName") || "Kalu";
+    const phcName = localStorage.getItem("phcName") || "Awka Central PHC";
+    
+    // Combine names cleanly
+    const fullTitle = `Nurse ${firstName} ${lastName}`;
+
+    // 1. Update Top-Bar Greeting (Replaces static "Nurse Sumayyah")
+    const greetingElement = document.querySelector(".top-bar p");
+    if (greetingElement) {
+        const hour = new Date().getHours();
+        let greetingTime = "Good evening";
+        if (hour < 12) greetingTime = "Good morning";
+        else if (hour < 18) greetingTime = "Good afternoon";
+
+        greetingElement.textContent = `${greetingTime}, Nurse ${firstName}`;
+    }
+
+    // 2. Update Sidebar Profile Section (Replaces static "Nurse Ngozi Kalu" and "Awka Central PHC")
+    const profileHeaderName = document.querySelector(".user-profile .info h5");
+    const profileSubText = document.querySelector(".user-profile .info p");
+    const profileAvatar = document.querySelector(".user-profile .profile h3");
+
+    if (profileHeaderName) profileHeaderName.textContent = fullTitle;
+    if (profileSubText) profileSubText.textContent = phcName;
+
+    // 3. Generate initials badge dynamically (e.g., "John Smith" -> "JS")
+    if (profileAvatar) {
+        const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+        profileAvatar.textContent = initials || "NK";
+    }
+}
+
+/**
+ * Updates the UI with the current live formatted date
  */
 function initializeDate() {
     const dateElement = document.getElementById("date");
@@ -303,17 +340,15 @@ function initializeDate() {
 }
 
 /**
- * Fetches dashboard overview stats from the API and updates the stat cards
+ * Fetches real-time dashboard overview stats from the API endpoint
  */
 async function fetchDashboardOverview() {
-    // Select the stat card counter elements
     const registeredWomenEl = document.querySelector(".stat-card.black h1");
     const dueThisWeekEl = document.querySelector(".stat-card.green h1");
     const missedVisitsEl = document.querySelector(".stat-card.orange h1");
     const redFlagsEl = document.querySelector(".stat-card.red h1");
 
     try {
-        // Retrieve the JWT token securely stored during login
         const token = localStorage.getItem("accessToken"); 
         
         const response = await fetch("https://mama-check.onrender.com/api/v1/dashboard/chew/overview", {
@@ -324,27 +359,18 @@ async function fetchDashboardOverview() {
             }
         });
 
-        if (!response.ok) {
-            if (response.status === 401 || response.status === 403) {
-                console.error("Unauthorized access. Redirecting to login...");
-                // window.location.href = "/login.html"; // Uncomment to enforce route guard
-                return;
-            }
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
 
-        // Dynamically map incoming API keys to corresponding HTML cards
+        // Dynamically assign keys returned from your endpoint payload
         if (registeredWomenEl) registeredWomenEl.textContent = data.totalPregnancies ?? 0;
         if (dueThisWeekEl) dueThisWeekEl.textContent = data.pendingVisits ?? 0;
-        // Adjust these mappings based on your exact API models if needed
         if (missedVisitsEl) missedVisitsEl.textContent = data.activePregnancies ?? 0; 
         if (redFlagsEl) redFlagsEl.textContent = data.redFlagAlerts ?? 0;
 
     } catch (error) {
         console.error("Failed to load dashboard metrics:", error);
-        // Fallback placeholder formatting in case of connection loss
         [registeredWomenEl, dueThisWeekEl, missedVisitsEl, redFlagsEl].forEach(el => {
             if (el) el.textContent = "--";
         });
@@ -352,7 +378,7 @@ async function fetchDashboardOverview() {
 }
 
 /**
- * Filter patient table rows locally matching search queries
+ * Filters the table rows locally based on patient name or location entry
  */
 function initializeSearch() {
     const searchInput = document.querySelector(".input-container input");
@@ -373,9 +399,6 @@ function initializeSearch() {
     });
 }
 
-/**
- * Interactive handlers for sidebar styling
- */
 function initializeSidebarNavigation() {
     const sidebarLinks = document.querySelectorAll("aside nav a");
     sidebarLinks.forEach(link => {
@@ -386,9 +409,6 @@ function initializeSidebarNavigation() {
     });
 }
 
-/**
- * Action button redirects
- */
 function initializeEnrollButton() {
     const enrollBtn = document.querySelector(".enroll-btn");
     if (enrollBtn) {
@@ -404,9 +424,7 @@ function initializeViewButtons() {
         btn.addEventListener("click", (e) => {
             const row = e.target.closest("tr");
             const name = row?.querySelector("td h5")?.innerText;
-            if (name) {
-                alert(`Opening profile for ${name}`);
-            }
+            if (name) alert(`Opening profile for ${name}`);
         });
     });
 }
