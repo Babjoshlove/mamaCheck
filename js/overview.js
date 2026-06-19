@@ -226,7 +226,7 @@
 // /js/overview.js
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Replace this with your actual authentication token logic
+  // Authentication Token Logic
   const TOKEN = localStorage.getItem("token") || ""; 
   
   // Elements Selection
@@ -263,59 +263,106 @@ document.addEventListener("DOMContentLoaded", () => {
   const fetchUserProfile = async () => {
     try {
       const response = await fetch("https://mama-check.onrender.com/api/v1/auth/me", {
-        headers: { "Authorization": `Bearer ${TOKEN}` }
+        headers: { 
+          "Authorization": `Bearer ${TOKEN}`,
+          "Accept": "application/json"
+        }
       });
       if (!response.ok) throw new Error("Failed to load profile");
-      const data = await response.json();
+      const user = await response.json();
       
-      if (data.success && data.user) {
-        const user = data.user;
-        profileName.textContent = user.name || "CHEW User";
-        profilePhc.textContent = user.phc || "Primary Health Centre";
-        
-        // Create 2-letter Avatar
-        if (user.name) {
-          const initials = user.name.split(" ").map(n => n[0]).join("").toUpperCase();
-          profileAvatar.textContent = initials.slice(0, 2);
-        }
+      // Handle nested or flat data schema variations gracefully
+      const userData = user.user || user;
+      const firstName = userData.firstName || "";
+      const lastName = userData.lastName || "";
+      const fullName = userData.name || `${firstName} ${lastName}`.trim() || "CHEW User";
+      
+      profileName.textContent = fullName;
+      
+      // Format UI locations using LGA and State
+      if (userData.lga && userData.state) {
+        const formatLocation = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        profilePhc.textContent = `${formatLocation(userData.lga)}, ${formatLocation(userData.state)} State`;
+      } else {
+        profilePhc.textContent = userData.phc || "Assigned PHC Zone";
       }
+      
+      // Render 2-letter Avatar
+      if (firstName || lastName) {
+        profileAvatar.textContent = ((firstName[0] || "") + (lastName[0] || "")).toUpperCase();
+      } else if (fullName) {
+        const initials = fullName.split(" ").map(n => n[0]).join("").toUpperCase();
+        profileAvatar.textContent = initials.slice(0, 2);
+      }
+
+      // Automatically chain down the specific user ID for contextual data
+      const chewId = userData.id || userData.userId; 
+      if (chewId) {
+        fetchChewPregnancies(chewId);
+      } else {
+        console.warn("CHEW ID context missing in profile payload.");
+      }
+
     } catch (error) {
       console.error("Error fetching profile:", error);
       profileName.textContent = "Error Loading Profile";
+      profilePhc.textContent = "Authentication failed";
     }
   };
 
-  // Fetch Dashboard Dashboard Data
+  // Fetch Summary KPIs Dashboard Module Data
   const fetchDashboardData = async () => {
     try {
       const response = await fetch("https://mama-check.onrender.com/api/v1/chew/dashboard", {
-        headers: { "Authorization": `Bearer ${TOKEN}` }
+        headers: { 
+          "Authorization": `Bearer ${TOKEN}`,
+          "Accept": "application/json"
+        }
       });
       if (!response.ok) throw new Error("Failed to load dashboard statistics");
       const data = await response.json();
 
       if (data.success && data.overview) {
-        renderStats(data.overview.kpis);
-        renderRecentPatients(data.overview.recentRegistrations || []);
+        renderStats(data.overview.kpis || {});
         renderAlerts(data.overview.recentAlerts || []);
       }
     } catch (error) {
-      console.error("Error fetching dashboard payload:", error);
-      showTableError("Failed to fetch records from server.");
+      console.error("Error fetching dashboard statistics:", error);
     }
   };
 
-  // Render KPIs to Card Modules
-  const renderStats = (kpis) => {
-    statTotalWomen.textContent = kpis.totalWomen || 0;
-    statActivePregnancies.textContent = kpis.dueThisWeek || 0; 
-    statMissedVisits.textContent = kpis.overdueVisits || 0;
-    statHighRisk.textContent = kpis.highRiskWomen || kpis.redFlagsToday || 0;
+  // Fetch Pregnancies assigned to the logged-in CHEW ID
+  const fetchChewPregnancies = async (chewId) => {
+    try {
+      const response = await fetch(`https://mama-check.onrender.com/api/v1/pregnancies/chew/${chewId}`, {
+        headers: { 
+          "Authorization": `Bearer ${TOKEN}`,
+          "Accept": "application/json"
+        }
+      });
+      if (!response.ok) throw new Error("Failed to load pregnancies");
+      const pregnancies = await response.json();
+
+      renderRecentPatients(pregnancies);
+    } catch (error) {
+      console.error("Error fetching pregnancies list:", error);
+      showTableError("Failed to fetch assigned patients from registry.");
+    }
   };
 
-  // Render Patient Table Records
+  // Render KPIs to UI Metric Cards
+  const renderStats = (kpis) => {
+    statTotalWomen.textContent = kpis.totalWomen ?? 0;
+    statActivePregnancies.textContent = kpis.dueThisWeek ?? kpis.activePregnancies ?? 0; 
+    statMissedVisits.textContent = kpis.overdueVisits ?? 0;
+    statHighRisk.textContent = kpis.highRiskWomen ?? kpis.redFlagsToday ?? 0;
+  };
+
+  // Render Patient Registry Table
   const renderRecentPatients = (patients) => {
-    if (patients.length === 0) {
+    const listData = Array.isArray(patients) ? patients : (patients.recentRegistrations || []);
+
+    if (listData.length === 0) {
       womenListTableBody.innerHTML = `
         <tr>
           <td colspan="5" style="text-align: center; padding: 20px; color: #A1A1AA;">No recent patient registrations found.</td>
@@ -323,13 +370,15 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    womenListTableBody.innerHTML = patients.map(patient => {
-      // Dynamic evaluation for HTML styling tags based on status
+    // Cap display items at 5 rows for clean view dashboard presentation
+    const itemsToRender = listData.slice(0, 5);
+
+    womenListTableBody.innerHTML = itemsToRender.map(patient => {
       const statusClass = patient.status?.toLowerCase() === 'high risk' ? 'status-red' : 'status-green';
       
       return `
         <tr>
-          <td><strong>${patient.name}</strong></td>
+          <td><strong>${patient.name || 'Unnamed Mama'}</strong></td>
           <td>Wk ${patient.currentWeek || '--'}</td>
           <td>
             <div class="progress-bar-placeholder" style="font-size:0.85rem;">
@@ -337,15 +386,15 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           </td>
           <td><span class="status-pill ${statusClass}">${patient.status || 'Active'}</span></td>
-          <td><a href="ancTracker.html?id=${patient.id}" class="action-view-btn">Manage</a></td>
+          <td><a href="ancTracker.html?id=${patient.id || patient._id}" class="action-view-btn">Manage</a></td>
         </tr>
       `;
     }).join('');
   };
 
-  // Render Live Active Alerts Panel
+  // Render Live Emergency Red Flags Panel
   const renderAlerts = (alerts) => {
-    if (alerts.length === 0) {
+    if (!alerts || alerts.length === 0) {
       alertCardsContainer.innerHTML = `
         <div style="text-align: center; padding: 25px; color: #A1A1AA; font-size: 0.9rem;">
           <p>🎉 All clean! No active emergency red flags found today.</p>
@@ -383,154 +432,16 @@ document.addEventListener("DOMContentLoaded", () => {
       </tr>`;
   };
 
-  // Initialize page functions
-  initDateTime();
-  fetchUserProfile();
-  fetchDashboardData();
-});
-
-// Fetch Current Logged-in User Profile from /api/v1/auth/me
-  const fetchUserProfile = async () => {
-    try {
-      const response = await fetch("https://mama-check.onrender.com/api/v1/auth/me", {
-        headers: { 
-          "Authorization": `Bearer ${TOKEN}`,
-          "Accept": "application/json"
-        }
-      });
-      if (!response.ok) throw new Error("Failed to load profile");
-      const user = await response.json();
-      
-      // Extract data based on the API response schema
-      const firstName = user.firstName || "";
-      const lastName = user.lastName || "";
-      const fullName = user.name || `${firstName} ${lastName}`.trim() || "CHEW User";
-      
-      // Render name and location details
-      profileName.textContent = fullName;
-      
-      // Formatting the PHC / Location string using LGA and State
-      if (user.lga && user.state) {
-        // Capitalizes the first letter of LGA and State for clean UI presentation
-        const formatLocation = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-        profilePhc.textContent = `${formatLocation(user.lga)}, ${formatLocation(user.state)} State`;
-      } else {
-        profilePhc.textContent = "Assigned PHC Zone";
-      }
-      
-      // Create 2-letter Avatar initials from names
-      if (firstName || lastName) {
-        const initials = ((firstName[0] || "") + (lastName[0] || "")).toUpperCase();
-        profileAvatar.textContent = initials || "--";
-      } else if (user.name) {
-        const initials = user.name.split(" ").map(n => n[0]).join("").toUpperCase();
-        profileAvatar.textContent = initials.slice(0, 2);
-      }
-
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      profileName.textContent = "Error Loading Profile";
-      profilePhc.textContent = "Authentication failed";
-    }
+  // Orchestrated Unified Initialization Sequence
+  const initDashboard = () => {
+    initDateTime();
+    
+    // Execute endpoints concurrently 
+    Promise.all([
+      fetchUserProfile(),
+      fetchDashboardData()
+    ]).catch(err => console.error("Error during dashboard aggregation sequence:", err));
   };
-  // Fetch Current Logged-in User Profile from /api/v1/auth/me
-const fetchUserProfile = async () => {
-  try {
-    const response = await fetch("https://mama-check.onrender.com/api/v1/auth/me", {
-      headers: { 
-        "Authorization": `Bearer ${TOKEN}`,
-        "Accept": "application/json"
-      }
-    });
-    if (!response.ok) throw new Error("Failed to load profile");
-    const user = await response.json();
-    
-    // 1. Render User profile info to UI
-    const firstName = user.firstName || "";
-    const lastName = user.lastName || "";
-    profileName.textContent = `${firstName} ${lastName}`.trim() || "CHEW User";
-    
-    if (user.lga && user.state) {
-      profilePhc.textContent = `${user.lga.toUpperCase()}, ${user.state} State`;
-    }
 
-    if (firstName || lastName) {
-      profileAvatar.textContent = ((firstName[0] || "") + (lastName[0] || "")).toUpperCase();
-    }
-
-    // 2. Use the user's ID to fetch their specific assigned pregnancies
-    const chewId = user.id || user.userId; 
-    if (chewId) {
-      fetchChewPregnancies(chewId);
-    } else {
-      console.error("CHEW ID not found in profile payload");
-    }
-
-  } catch (error) {
-    console.error("Error fetching profile:", error);
-    profileName.textContent = "Error Loading Profile";
-  }
-};
-
-// Fetch pregnancies specific to this CHEW ID
-const fetchChewPregnancies = async (chewId) => {
-  try {
-    const response = await fetch(`https://mama-check.onrender.com/api/v1/pregnancies/chew/${chewId}`, {
-      headers: { 
-        "Authorization": `Bearer ${TOKEN}`,
-        "Accept": "application/json"
-      }
-    });
-    if (!response.ok) throw new Error("Failed to load pregnancies");
-    const pregnancies = await response.json();
-
-    // Map your dataset to the rendering function
-    renderRecentPatients(pregnancies);
-    
-  } catch (error) {
-    console.error("Error fetching pregnancies:", error);
-    showTableError("Failed to fetch assigned patients.");
-  }
-};
-
-// Fetch danger reports for a specific pregnancy ID
-const fetchPregnancyDangerReports = async (pregnancyId) => {
-  try {
-    const response = await fetch(`https://mama-check.onrender.com/api/v1/pregnancies/${pregnancyId}/danger-reports`, {
-      headers: { 
-        "Authorization": `Bearer ${TOKEN}`,
-        "Accept": "application/json"
-      }
-    });
-    if (!response.ok) throw new Error("Failed to load danger reports");
-    const dangerReports = await response.json();
-
-    // Example: Process and display danger signs
-    console.log(`Danger reports for pregnancy ${pregnancyId}:`, dangerReports);
-    return dangerReports;
-    
-  } catch (error) {
-    console.error("Error fetching danger reports:", error);
-  }
-};
-
-// Fetch ANC visit attendance history for a specific pregnancy ID
-const fetchPregnancyAttendanceHistory = async (pregnancyId) => {
-  try {
-    const response = await fetch(`https://mama-check.onrender.com/api/v1/pregnancies/${pregnancyId}/attendance-history`, {
-      headers: { 
-        "Authorization": `Bearer ${TOKEN}`,
-        "Accept": "application/json"
-      }
-    });
-    if (!response.ok) throw new Error("Failed to load attendance history");
-    const history = await response.json();
-
-    // Example handling: Log or process the array of past visits
-    console.log(`Attendance history for pregnancy ${pregnancyId}:`, history);
-    return history;
-    
-  } catch (error) {
-    console.error("Error fetching attendance history:", error);
-  }
-};
+  initDashboard();
+});
