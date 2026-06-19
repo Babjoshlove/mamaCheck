@@ -273,9 +273,8 @@
 
 // dateElement.textContent = formatDate();
 
-
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Personalize User Profile using Registration Data
+    // 1. Personalize User Profile using /api/v1/auth/register-chew Registration Data
     personalizeCHEWProfile();
     initializeDate();
     initializeSidebarNavigation();
@@ -291,29 +290,30 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Dynamically updates the greeting, profile name, and initials matching registration values
+ * Dynamically updates the greeting, profile name, facility, and initials matching registration values
  */
 function personalizeCHEWProfile() {
-    // Read the explicit keys provided during registration from localStorage
-    const firstName = localStorage.getItem("firstName") || "";
-    const lastName = localStorage.getItem("lastName") || "";
-    const phcName = localStorage.getItem("phcName") || "";
+    // Read keys provided during the /api/v1/auth/register-chew registration payload
+    const firstName = localStorage.getItem("firstName") || "Sumayyah";
+    const lastName = localStorage.getItem("lastName") || "Aliyu";
+    const phcName = localStorage.getItem("phcName") || "Awka Central PHC";
     
     // Combine names cleanly
     const fullTitle = `Nurse ${firstName} ${lastName}`;
 
-    // 1. Update Top-Bar Greeting (Replaces static "Nurse Sumayyah")
+    // 1. Update Top-Bar Greeting (Replaces static template text)
     const greetingElement = document.querySelector(".top-bar p");
     if (greetingElement) {
         const hour = new Date().getHours();
         let greetingTime = "Good evening";
+        
         if (hour < 12) greetingTime = "Good morning";
         else if (hour < 18) greetingTime = "Good afternoon";
 
         greetingElement.textContent = `${greetingTime}, Nurse ${firstName}`;
     }
 
-    // 2. Update Sidebar Profile Section (Replaces static "Nurse Ngozi Kalu" and "Awka Central PHC")
+    // 2. Update Sidebar Profile Section 
     const profileHeaderName = document.querySelector(".user-profile .info h5");
     const profileSubText = document.querySelector(".user-profile .info p");
     const profileAvatar = document.querySelector(".user-profile .profile h3");
@@ -321,10 +321,10 @@ function personalizeCHEWProfile() {
     if (profileHeaderName) profileHeaderName.textContent = fullTitle;
     if (profileSubText) profileSubText.textContent = phcName;
 
-    // 3. Generate initials badge dynamically (e.g., "John Smith" -> "JS")
+    // 3. Generate dynamic two-letter avatar initials (e.g., "Sumayyah Aliyu" -> "SA")
     if (profileAvatar) {
         const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-        profileAvatar.textContent = initials || "NK";
+        profileAvatar.textContent = initials || "MC";
     }
 }
 
@@ -429,6 +429,9 @@ function initializeViewButtons() {
     });
 }
 
+/**
+ * Toggles expanding alert summary details layout
+ */
 function initializeAlertCards() {
     const alertCards = document.querySelectorAll(".alert-card");
     alertCards.forEach(card => {
