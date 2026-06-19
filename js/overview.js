@@ -445,3 +445,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initDashboard();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const enrollBtn = document.getElementById("enrollMamaBtn");
+
+    if (enrollBtn) {
+        enrollBtn.addEventListener("click", () => {
+            window.location.href = "mama-check.html";
+        });
+    }
+});
