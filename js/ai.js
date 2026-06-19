@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function personalizeCHEWProfile() {
     // Read keys saved from the /api/v1/auth/register-chew registration response payload
-    const firstName = localStorage.getItem("firstName") || "Sumayyah";
-    const lastName = localStorage.getItem("lastName") || "Aliyu";
-    const phcName = localStorage.getItem("phcName") || "Awka Central PHC";
+    const firstName = localStorage.getItem("firstName") ;
+    const lastName = localStorage.getItem("lastName");
+    const phcName = localStorage.getItem("phcName") ;
     
     const fullTitle = `Nurse ${firstName} ${lastName}`;
 
