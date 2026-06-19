@@ -274,15 +274,15 @@
 // dateElement.textContent = formatDate();
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Personalize User Profile using /api/v1/auth/register-chew Data
+    // 1. Personalize User Profile using Registration Data
     personalizeCHEWProfile();
     initializeDate();
     initializeSidebarNavigation();
     
-    // 2. Fetch Live Summary Analytics from the Dashboard Endpoint
+    // 2. Fetch Live Summary Data from API
     fetchDashboardOverview();
 
-    // 3. Attach UI Event Listeners
+    // 3. Attach Interactive Event Listeners
     initializeSearch();
     initializeEnrollButton();
     initializeViewButtons();
@@ -290,71 +290,39 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Dynamically updates greetings, profile names, facilities, and initials.
- * If data is missing locally, it attempts a live authentication sync fallback.
+ * Dynamically updates the greeting, profile name, and initials matching registration values
  */
-async function personalizeCHEWProfile() {
-    let firstName = localStorage.getItem("firstName");
-    let lastName = localStorage.getItem("lastName");
-    let phcName = localStorage.getItem("phcName");
-    const token = localStorage.getItem("accessToken");
+function personalizeCHEWProfile() {
+    // Read keys saved from the /api/v1/auth/register-chew registration response payload
+    const firstName = localStorage.getItem("firstName") || "Sumayyah";
+    const lastName = localStorage.getItem("lastName") || "Aliyu";
+    const phcName = localStorage.getItem("phcName") || "Awka Central PHC";
+    
+    const fullTitle = `Nurse ${firstName} ${lastName}`;
 
-    // FALLBACK SYNC: If localStorage is empty, try pulling from /api/v1/auth/me
-    if ((!firstName || !lastName || !phcName) && token) {
-        try {
-            const syncResponse = await fetch("https://mama-check.onrender.com/api/v1/auth/me", {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            if (syncResponse.ok) {
-                const userData = await syncResponse.json();
-                firstName = userData.firstName || userData.user?.firstName;
-                lastName = userData.lastName || userData.user?.lastName;
-                phcName = userData.phcName || userData.user?.phcName;
-
-                // Cache values locally for future instant loads
-                if (firstName) localStorage.setItem("firstName", firstName);
-                if (lastName) localStorage.setItem("lastName", lastName);
-                if (phcName) localStorage.setItem("phcName", phcName);
-            }
-        } catch (err) {
-            console.error("Failed to fallback sync user context:", err);
-        }
-    }
-
-    // Secondary Hard Defaults if both localStorage and sync are unavailable
-    const finalFirstName = firstName || "Sumayyah";
-    const finalLastName = lastName || "Aliyu";
-    const finalPhcName = phcName || "Awka Central PHC";
-    const fullTitle = `Nurse ${finalFirstName} ${finalLastName}`;
-
-    // 1. Update Top-Bar Greeting
-    const greetingElement = document.querySelector(".top-bar p");
+    // 1. Update Top-Bar Greeting Text using ID
+    const greetingElement = document.getElementById("main-greeting");
     if (greetingElement) {
         const hour = new Date().getHours();
         let greetingTime = "Good evening";
-        
         if (hour < 12) greetingTime = "Good morning";
         else if (hour < 18) greetingTime = "Good afternoon";
 
-        greetingElement.textContent = `${greetingTime}, Nurse ${finalFirstName}`;
+        greetingElement.textContent = `${greetingTime}, Nurse ${firstName}`;
     }
 
-    // 2. Update Sidebar Profile Section 
-    const profileHeaderName = document.querySelector(".user-profile .info h5");
-    const profileSubText = document.querySelector(".user-profile .info p");
-    const profileAvatar = document.querySelector(".user-profile .profile h3");
+    // 2. Update Sidebar Profile Text elements using IDs
+    const profileHeaderName = document.getElementById("profile-name");
+    const profileSubText = document.getElementById("profile-phc");
+    const profileAvatar = document.getElementById("profile-avatar");
 
     if (profileHeaderName) profileHeaderName.textContent = fullTitle;
-    if (profileSubText) profileSubText.textContent = finalPhcName;
+    if (profileSubText) profileSubText.textContent = phcName;
 
-    // 3. Generate dynamic initials badge (e.g., "Sumayyah Aliyu" -> "SA")
+    // 3. Generate initials badge dynamically (e.g., "Sumayyah Aliyu" -> "SA")
     if (profileAvatar) {
-        const initials = `${finalFirstName.charAt(0)}${finalLastName.charAt(0)}`.toUpperCase();
-        profileAvatar.textContent = initials || "MC";
+        const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+        profileAvatar.textContent = initials || "SA";
     }
 }
 
@@ -393,7 +361,7 @@ async function fetchDashboardOverview() {
 
         const data = await response.json();
 
-        // Assign keys returned from your endpoint payload payload
+        // Assign metrics returned from endpoint properties safely
         if (registeredWomenEl) registeredWomenEl.textContent = data.totalPregnancies ?? 0;
         if (dueThisWeekEl) dueThisWeekEl.textContent = data.pendingVisits ?? 0;
         if (missedVisitsEl) missedVisitsEl.textContent = data.activePregnancies ?? 0; 
