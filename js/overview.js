@@ -61,7 +61,7 @@ async function fetchDashboardData() {
     
     if (!token) {
         console.warn("No access token found. Redirecting to login/registration...");
-        window.location.href = "registeration1.html";
+        window.location.href = "registration1.html"; // <-- FIXED SPELLING HERE
         return;
     }
 
@@ -75,23 +75,19 @@ async function fetchDashboardData() {
         });
 
         if (response.status === 401 || response.status === 403) {
-            // Token expired or invalid session protection router
             localStorage.clear();
-            window.location.href = "registeration1.html";
+            window.location.href = "registration1.html"; // <-- FIXED SPELLING HERE
             return;
         }
 
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         
         const data = await response.json();
-        
-        // Dynamic dashboard components paint handling
         updateStatistics(data.stats);
         populatePatientTable(data.patients);
         
     } catch (error) {
         console.error("Failed to load authenticated dashboard data:", error);
-        // Clean fallback: DOM falls back gracefully to standard UI placeholders
     }
 }
 
@@ -215,7 +211,7 @@ function initializeEnrollment() {
     if (!enrollBtn) return;
 
     enrollBtn.addEventListener("click", () => {
-        window.location.href = "registeration1.html";
+        window.location.href = "registration1.html"; // <-- FIXED SPELLING HERE
     });
 }
 
