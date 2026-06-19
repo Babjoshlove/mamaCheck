@@ -224,17 +224,16 @@
 //     });
 // }
 
-
 document.addEventListener("DOMContentLoaded", async () => {
-    // 1. Setup profile text, live date tracking, and navigation triggers
+    // 1. Initialize Profile context configurations
     await personalizeCHEWProfile();
     initializeDate();
     initializeSidebarNavigation();
     
-    // 2. Fetch live metrics from the comprehensive full-dashboard endpoint
+    // 2. Fetch live metrics mapping your actual API layout response
     fetchFullDashboardData();
 
-    // 3. Attach interactive UI handlers
+    // 3. Attach standard interactive UI triggers
     initializeSearch();
     initializeEnrollButton();
     initializeViewButtons();
@@ -242,7 +241,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 /**
- * Personalizes the dashboard UI elements. Fallback fetches from /api/v1/auth/me if local storage is unpopulated.
+ * Personalizes the dashboard greetings and profile fields using registration credentials
  */
 async function personalizeCHEWProfile() {
     let firstName = localStorage.getItem("firstName");
@@ -250,8 +249,8 @@ async function personalizeCHEWProfile() {
     let phcName = localStorage.getItem("phcName");
     const token = localStorage.getItem("accessToken");
 
-    // Live Handshake: If items are missing or came back as string 'null', hit the profile context endpoint
-    if ((!firstName || !lastName || phcName === "null" || !phcName) && token) {
+    // Pull directly from /api/v1/auth/me if local cache storage is currently clean
+    if ((!firstName || !lastName || !phcName || phcName === "null") && token) {
         try {
             const response = await fetch("https://mama-check.onrender.com/api/v1/auth/me", {
                 method: "GET",
@@ -267,23 +266,21 @@ async function personalizeCHEWProfile() {
                 lastName = user.lastName;
                 phcName = user.phcName || user.facilityName;
 
-                // Persist securely to prevent redundant profile calls
                 localStorage.setItem("firstName", firstName || "");
                 localStorage.setItem("lastName", lastName || "");
                 localStorage.setItem("phcName", phcName || "");
             }
         } catch (err) {
-            console.error("Error retrieving user credentials:", err);
+            console.error("Error retrieving user context profiles:", err);
         }
     }
 
-    // Apply defaults if authorization session is fully blank
     const finalFirst = firstName && firstName !== "null" ? firstName : "CHEW";
     const finalLast = lastName && lastName !== "null" ? lastName : "Provider";
     const finalPhc = phcName && phcName !== "null" ? phcName : "Maternal Care Clinic";
 
-    // Update Top-Bar Greeting
-    const greetingElement = document.getElementById("main-greeting");
+    // Update Top-Bar Dynamic Greeting
+    const greetingElement = document.getElementById("main-greeting") || document.querySelector(".top-bar p");
     if (greetingElement) {
         const hour = new Date().getHours();
         let greetingTime = "Good evening";
@@ -293,10 +290,10 @@ async function personalizeCHEWProfile() {
         greetingElement.textContent = `${greetingTime}, Nurse ${finalFirst}`;
     }
 
-    // Update Aside Elements
-    const nameEl = document.getElementById("profile-name");
-    const phcEl = document.getElementById("profile-phc");
-    const avatarEl = document.getElementById("profile-avatar");
+    // Update Sidebar Navigation Profiles
+    const nameEl = document.getElementById("profile-name") || document.querySelector(".user-profile .info h5");
+    const phcEl = document.getElementById("profile-phc") || document.querySelector(".user-profile .info p");
+    const avatarEl = document.getElementById("profile-avatar") || document.querySelector(".user-profile .profile h3");
 
     if (nameEl) nameEl.textContent = `Nurse ${finalFirst} ${finalLast}`;
     if (phcEl) phcEl.textContent = finalPhc;
@@ -306,18 +303,17 @@ async function personalizeCHEWProfile() {
 }
 
 /**
- * Pulls analytics data via the integrated /api/v1/dashboard/full-dashboard endpoint
+ * Loads values directly from your /api/v1/dashboard/full-dashboard response payload
  */
 async function fetchFullDashboardData() {
-    const registeredWomenEl = document.querySelector(".stat-card.black h1");
-    const dueThisWeekEl = document.querySelector(".stat-card.green h1");
-    const missedVisitsEl = document.querySelector(".stat-card.orange h1");
-    const redFlagsEl = document.querySelector(".stat-card.red h1");
+    const registeredWomenEl = document.getElementById("stat-total-women");
+    const dueThisWeekEl = document.getElementById("stat-active-pregnancies");
+    const missedVisitsEl = document.getElementById("stat-missed-visits");
+    const redFlagsEl = document.getElementById("stat-high-risk");
 
     try {
         const token = localStorage.getItem("accessToken");
         
-        // Fetching from the combined full-dashboard platform path
         const response = await fetch("https://mama-check.onrender.com/api/v1/dashboard/full-dashboard?role=chew", {
             method: "GET",
             headers: {
@@ -326,25 +322,30 @@ async function fetchFullDashboardData() {
             }
         });
 
-        if (!response.ok) throw new Error(`Dashboard payload missing. Code: ${response.status}`);
+        if (!response.ok) throw new Error(`HTTP network error! Status: ${response.status}`);
 
         const result = await response.json();
         
         if (result.success && result.dashboard) {
             const kpis = result.dashboard.kpis;
             
-            // Map JSON properties to your statistical status grids
+            // Map JSON property metrics directly into your target layout boxes
             if (registeredWomenEl) registeredWomenEl.textContent = kpis.totalWomen ?? 0;
             if (dueThisWeekEl) dueThisWeekEl.textContent = kpis.activePregnancies ?? 0;
-            // Fallback parameters map safely if distinct keys return later
-            if (missedVisitsEl) missedVisitsEl.textContent = kpis.missedVisits ?? 0;
-            if (redFlagsEl) redFlagsEl.textContent = kpis.highRiskWomen ?? result.dashboard.triageDistribution?.RED?.count ?? 0;
+            if (redFlagsEl) redFlagsEl.textContent = kpis.highRiskWomen ?? 0;
+            
+            // Parse missed visits count directly out of the context collection array safely
+            if (missedVisitsEl) {
+                const missedArray = result.dashboard.missedVisitsByTriage || [];
+                const totalMissed = missedArray.reduce((acc, current) => acc + (current.missedVisits || 0), 0);
+                missedVisitsEl.textContent = totalMissed;
+            }
         }
 
     } catch (error) {
-        console.error("Failed to load full analytics:", error);
+        console.error("Failed to map API dashboard analytics:", error);
         [registeredWomenEl, dueThisWeekEl, missedVisitsEl, redFlagsEl].forEach(el => {
-            if (el) el.textContent = "--";
+            if (el) el.textContent = "0";
         });
     }
 }
@@ -361,7 +362,7 @@ function initializeDate() {
 }
 
 /**
- * Filter matching patient table rows dynamically
+ * Local Table Record Target Queries
  */
 function initializeSearch() {
     const searchInput = document.querySelector(".input-container input");
