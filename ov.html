@@ -18,240 +18,154 @@
     <script src="/js/overvi.js" defer></script>
 </head>
 <body>
-    <!-- aside bar -->
-     <aside>
+    <!-- Aside Sidebar Navigation -->
+    <aside>
         <div class="main-wrapper">
-            <!-- mamacheck logo -->
-             <div class="mamacheck-logo">
-            <img src="/images/image 11.svg" alt="mamacheck-logo">
-            <p class="logo-text">CHEW Dashboard . Pilot</p>
-        </div>
-           <!-- nav container -->
+            <!-- MamaCheck Logo -->
+            <div class="mamacheck-logo">
+                <img src="/images/image 11.svg" alt="mamacheck-logo">
+                <p class="logo-text">CHEW Dashboard . Pilot</p>
+            </div>
+            <!-- Nav Container -->
             <nav>
                 <div class="main-container">
-                    <div class="main">
-                    <p>MAIN</p></div>
+                    <div class="main"><p>MAIN</p></div>
                     <div class="main-sub">
-                         <a href="overview.html" class="sub">
-                            <img src="images/mage_dashboard.svg" alt="dashboard">Overview</a>
-               
+                        <a href="overview.html" class="sub">
+                            <img src="images/mage_dashboard.svg" alt="dashboard">Overview
+                        </a>
                         <a href="womenregistry.html" class="sub">
-                            <img src="images/mdi_register-outline.svg" alt="registrye">Women Registry</a>
-                
+                            <img src="images/mdi_register-outline.svg" alt="registry">Women Registry
+                        </a>
                         <a href="ancTracker.html" class="sub">
-                            <img src="images/hugeicons_appointment-02.svg" alt="appointment">ANC Tracker</a>
+                            <img src="images/hugeicons_appointment-02.svg" alt="appointment">ANC Tracker
+                        </a>
                     </div>
                 </div>
-               <!-- alerts container -->
+                <!-- Alerts Container -->
                 <div class="alerts-container">
                     <div class="alerts"><p>Alerts</p></div>
                     <div class="alerts-sub">
                         <a href="redFlagAlerts.html" class="sub red">
-                        <img src="images/mingcute_alert-line.svg" alt="alert">Red Flag Alerts <span>3</span></a>
+                            <img src="images/mingcute_alert-line.svg" alt="alert">Red Flag Alerts <span>3</span>
+                        </a>
                         <a href="weeklySummary.html" class="sub">
-                        <img src="images/chart-square-bar.svg" alt="chart">Weekly Summary</a>
+                            <img src="images/chart-square-bar.svg" alt="chart">Weekly Summary
+                        </a>
                     </div>
                 </div>
-               <!-- actions container -->
+                <!-- Actions Container -->
                 <div class="actions-container">
                     <div class="actions"><p>Actions</p></div>
-                     <a href="registration1.html" class="sub">
-                        <img src="images/Icon.svg" alt="plus">Enroll New Mama</a>
+                    <button class="sub enroll-btn" style="background: none; border: none; text-align: left; width: 100%; cursor: pointer;">
+                        <img src="images/Icon.svg" alt="plus">Enroll New Mama
+                    </button>
                 </div>
             </nav>
-         </div>
+        </div>
         
-         <!-- user profile & info -->
-          <div class="user-profile">
-            <div class="profile"><h3 id="profile-avatar">NK</h3></div>
-            <!-- user info -->
-             <div class="info">
-                <h5 id="profile-name">Nurse Ngozi Kalu</h5>
-                <p id="profile-phc">Awka Central PHC</p>
-             </div>
-          </div>
-     </aside>
+        <!-- User Profile Info -->
+        <div class="user-profile">
+            <div class="profile"><h3 id="profile-avatar">--</h3></div>
+            <div class="info">
+                <h5 id="profile-name">Loading...</h5>
+                <p id="profile-phc">Loading PHC...</p>
+            </div>
+        </div>
+    </aside>
 
-     <!-- main -->
-      <main>
-         <!-- top bar white background-->
-            <div class="top-bar">
-                <div><p id="main-greeting">Good morning, Nurse Sumayyah</p></div>
-                    <div class="inputDate">
-                        <!-- input -->
-                        <div class="input-container">
-                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.25 14.25L9.75 9.75M11.25 6C11.25 8.89949 8.89949 11.25 6 11.25C3.10051 11.25 0.75 8.89949 0.75 6C0.75 3.10051 3.10051 0.75 6 0.75C8.89949 0.75 11.25 3.10051 11.25 6Z" stroke="#A1A1AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg> 
-                            <input type="text" placeholder="Search Patients"> 
-                        </div>
-                    <!-- live changing date placeholder -->
-                        <div>
-                            <h4 id="date">Loading Date...</h4>
-                        </div>
-                    </div>
+    <!-- Main Content Panel -->
+    <main>
+        <!-- Top Bar Header -->
+        <div class="top-bar">
+            <div><p id="main-greeting">Good morning</p></div>
+            <div class="inputDate">
+                <div class="input-container">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.25 14.25L9.75 9.75M11.25 6C11.25 8.89949 8.89949 11.25 6 11.25C3.10051 11.25 0.75 8.89949 0.75 6C0.75 3.10051 3.10051 0.75 6 0.75C8.89949 0.75 11.25 3.10051 11.25 6Z" stroke="#A1A1AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg> 
+                    <input type="text" id="search-input" placeholder="Search Patients"> 
                 </div>
+                <div>
+                    <h4 id="date">Loading Date...</h4>
+                </div>
+            </div>
+        </div>
           
-            <!-- content milk background-->
-            <div class="contentO">
-                <!-- button container -->
-                <div class="button-container">
-                    <button class="enroll-btn"><img src="/images/Icon.svg" alt="plusIcon">Enroll New Mama</button>
+        <!-- Dashboard Body Workspace -->
+        <div class="contentO">
+            <div class="button-container">
+                <button class="enroll-btn"><img src="/images/Icon.svg" alt="plusIcon">Enroll New Mama</button>
+            </div>
+
+            <!-- Analytics Statistic Cards -->
+            <div class="stat-cards">
+                <div class="stat-card black">
+                    <p>REGISTERED WOMEN</p>
+                    <h1 id="stat-total-women">0</h1>
+                    <p>Current Total</p>
+                </div>
+                <div class="stat-card green">
+                    <p>DUE THIS WEEK</p>
+                    <h1 id="stat-active-pregnancies">0</h1>
+                    <p>Active Expectant Mamas</p>
+                </div>
+                <div class="stat-card orange">
+                    <p>MISSED VISITS</p>
+                    <h1 id="stat-missed-visits">0</h1>
+                    <p>Follow-up required</p>
+                </div>
+                <div class="stat-card red">
+                    <p>OPEN RED FLAGS</p>
+                    <h1 id="stat-high-risk">0</h1>
+                    <p>Urgent attention needed</p>
+                </div>
+            </div>
+
+            <!-- Patient Table & Alerts Module -->
+            <div class="tableAlert">
+                <!-- Patient Table Section -->
+                <div class="table-container">
+                    <div class="header">
+                        <p>Recent Patients</p>
+                        <a href="womenregistry.html">View all</a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NAME</th>
+                                <th>WEEK</th>
+                                <th>ANC PROGRESS</th>
+                                <th>STATUS</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="women-list">
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 20px; color: #A1A1AA;">Loading patient records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-        <!-- stat cards -->
-         <div class="stat-cards">
-            <div class="stat-card black">
-                <p>REGISTERED WOMEN</p>
-                <h1>24</h1>
-                <p>+3 This week</p>
-            </div>
-            <div class="stat-card green">
-                <p>DUE THIS WEEK</p>
-                <h1>6</h1>
-                <p>4 confirmed, 2 pending</p>
-            </div>
-            <div class="stat-card orange">
-                <p>MISSED VISITS</p>
-                <h1>24</h1>
-                <p>Follow-up required</p>
-            </div>
-            <div class="stat-card red">
-                <p>OPEN RED FLAGS</p>
-                <h1>3</h1>
-                <p>+3 This week</p>
-            </div>
-         </div>
-
-         <!-- patients table & Alerts pannel -->
-         <div class="tableAlert">
-            <!-- table -->
-            <div class="table-container">
-             <div class="header">
-                <p>Recent Patients</p>
-                <a href="#">View all</a>
-             </div>
-             <table>
-                <thead>
-                    <tr>
-                        <th>NAME</th>
-                        <th>WEEK</th>
-                        <th>ANC PROGRESS</th>
-                        <th>STATUS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h5>Adaeze Okonkwo</h5>
-                            <span>Akwa-igbo</span>
-                        </td>
-                        <td><span class="week-badge">wk 28</span></td>
-                        <td><div class="progress-bar"><div class="progress-fill red"></div></div></td>
-                        <td> <span class="red-badge"><span>•</span>Red Alert</span> </td>
-                        <td><button class="view-btn">view</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Chioma Eze</h5>
-                            <span>Onitsha-English</span>
-                        </td>
-                        <td><span class="week-badge">wk 24</span></td>
-                        <td><div class="progress-bar"><div class="progress-fill blue"></div></div></td>
-                        <td> <span class="yellow-badge"><span>•</span>Missed</span> </td>
-                        <td><button class="view-btn">view</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Fatima Aliyu</h5>
-                            <span>Niger-Hausa</span>
-                        </td>
-                        <td><span class="week-badge">wk 16</span></td>
-                        <td><div class="progress-bar"><div class="progress-fill green"></div></div></td>
-                        <td> <span class="green-badge"><span>•</span>Safe</span> </td>
-                        <td><button class="view-btn">view</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Babatunde Olushola</h5>
-                            <span>Oyo-yoruba</span>
-                        </td>
-                        <td><span class="week-badge">wk 32</span></td>
-                        <td><div class="progress-bar"><div class="progress-fill orange"></div></div></td>
-                        <td> <span class="yellow-badge"><span>•</span>Caution</span></span> </td>
-                        <td><button class="view-btn">view</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Grace Destiny</h5>
-                            <span>Edo-Pidgin</span>
-                        </td>
-                        <td><span class="week-badge">wk 20</span></td>
-                        <td><div class="progress-bar"><div class="progress-fill green"></div></div></td>
-                        <td> <span class="green-badge"><span>•</span>Safe</span> </td>
-                        <td><button class="view-btn">view</button></td>
-                    </tr>
-                </tbody>
-             </table>
-            </div>
-          <!-- alerts -->
-           <div class="alerts-wrapper">
-            <div class="alerts-header">
-                <p>Active Alerts</p>
-                <a href="#">All flags</a>
-            </div>
-            <!-- content -->
-             <div class="alert-cards">
-                <div class="alert-card">
-                    <div class="alert-left">
-                        <div class="alert-icon">
-                        <img src="/images/alert caution mark.svg" alt="caution icon">
-                        </div>
-                        <div class="alert-text">
-                            <h5>Adaeze Okonkwo</h5>
-                            <span>Heavy bleeding + severe abdominal</span>
-                            <span>pain - Wk 28</span>
-                            <span>Today, 09:07am</span>
+                <!-- Live Active Alerts Section -->
+                <div class="alerts-wrapper">
+                    <div class="alerts-header">
+                        <p>Active Alerts</p>
+                        <a href="redFlagAlerts.html">All flags</a>
+                    </div>
+                    <div class="alert-cards">
+                        <!-- Alert Item Placeholder (Cleared/Updated by JavaScript) -->
+                        <div style="text-align: center; padding: 25px; color: #A1A1AA; font-size: 0.9rem;">
+                            <p>Loading emergency alerts...</p>
                         </div>
                     </div>
-                    <span class="open-red">OPEN</span>
                 </div>
-                <div class="alert-cards">
-                    <div class="alert-card">
-                        <div class="alert-left">
-                            <div class="alert-icon">
-                            <img src="/images/alert exclamation mark.svg" alt="exclamation icon">
-                            </div>
-                            <div class="alert-text">
-                                <h5>Adaeze Okonkwo</h5>
-                                <span>Heavy bleeding + severe abdominal</span>
-                                <span>pain - Wk 28</span>
-                                <span>Today, 09:07am</span>
-                            </div>
-                        </div>
-                        <span class="open-yellow">OPEN</span>
-                    </div>
-                <div class="alert-cards">
-                    <div class="alert-card">
-                        <div class="alert-left">
-                            <div class="alert-icon">
-                                <img src="/images/alert caution mark.svg" alt="caution icon">
-                            </div>
-                            <div class="alert-text">
-                                <h5>Adaeze Okonkwo</h5>
-                                <span>Heavy bleeding + severe abdominal</span>
-                                <span>pain - Wk 28</span>
-                                <span>Today, 09:07am</span>
-                            </div>
-                        </div>
-                        <span class="open-black">OPEN</span>
-                    </div>
+            </div>
+        </div>
+    </main>
 
-                </div>
-           </div>
-         </div>
-
-       </div>
-      </main>
+    <!-- JS Scripts loaded asynchronously at the bottom of the DOM lifecycle -->
+    <script src="js/overview.js" defer></script>
 </body>
 </html>
