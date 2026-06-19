@@ -220,8 +220,22 @@ authForm.addEventListener("submit", async (e) => {
 updateView();
 
 
-// Add inside your registration form handler after getting response:
-localStorage.setItem("accessToken", responseData.token);
-localStorage.setItem("firstName", responseData.user.firstName); // e.g. "Sumayyah"
-localStorage.setItem("lastName", responseData.user.lastName);   // e.g. "Aliyu"
-localStorage.setItem("phcName", responseData.user.phcName);     // e.g. "Central PHC Ikeja"
+/// --- Inside your registration/login submit success handler ---
+const response = await fetch("https://mama-check.onrender.com/api/v1/auth/register-chew", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData)
+});
+
+if (response.ok) {
+    const result = await response.json();
+    
+    // SAVE THESE EXACT KEYS SO THE OVERVIEW PAGE CAN RETRIEVE THEM:
+    localStorage.setItem("firstName", result.user?.firstName || result.firstName);
+    localStorage.setItem("lastName", result.user?.lastName || result.lastName);
+    localStorage.setItem("phcName", result.user?.phcName || result.phcName);
+    localStorage.setItem("accessToken", result.token); // Needed for your overview dashboard metrics call
+    
+    // Redirect to the dashboard
+    window.location.href = "/overview.html";
+}
