@@ -8,11 +8,11 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const lmp = document.getElementById("lmp").value;
-    const edd = document.getElementById("edd").value;
+    // const edd = document.getElementById("edd").value;
     const clinicName = document.getElementById("clinicName").value;
     const assignedChew = document.getElementById("assignedChew").value;
 
-    if (!lmp || !edd || !clinicName || !assignedChew) {
+    if (!lmp || !clinicName || !assignedChew) {
         alert("Please complete all fields.");
         return;
     }
@@ -24,7 +24,7 @@ form.addEventListener("submit", (e) => {
 
     // Add Step 2 data
     registrationData.lmp = lmp;
-    registrationData.edd = edd;
+    // registrationData.edd = edd;
     registrationData.clinicName = clinicName;
     registrationData.assignedChew = assignedChew;
 

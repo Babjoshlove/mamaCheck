@@ -249,7 +249,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const now = new Date();
     
     // Formatting Date: e.g., "Friday, June 19, 2026"
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { weekday: 'long',
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric'
+ };
     dateDisplay.textContent = now.toLocaleDateString('en-US', options);
 
     // Dynamic Greeting based on time
