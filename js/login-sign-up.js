@@ -1,4 +1,6 @@
-const BASE_URL = "https://mama-check.onrender.com";
+const BASE_URL = "https://mamacheck26.onrender.com";
+https:/
+
 
 // API ENDPOINTS
 const API = {

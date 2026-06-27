@@ -1,6 +1,5 @@
 
     //registration page 2 
-// reg.js
 
 const form = document.getElementById("registration-form2");
 

@@ -1,7 +1,7 @@
 // // ==========================================================================
 // // CONFIGURATION: API Endpoint Settings
 // // ==========================================================================
-// const API_BASE_URL = "https://mama-check.onrender.com/api/v1"; 
+// const API_BASE_URL = "They should use the documentation sent earlier, cause other part of the URL is there to complete this one sent. Example https://mamacheck26.onrender.com/api/v1"; 
 // const ENDPOINTS = {
 //     getOverview: `${API_BASE_URL}/dashboard/overview` // Adjust the exact path if needed by your API
 // };
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch Current Logged-in User Profile
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch("https://mama-check.onrender.com/api/v1/auth/me", {
+      const response = await fetch("https://mamacheck26.onrender.com/api/v1/auth/me", {
         headers: { 
           "Authorization": `Bearer ${TOKEN}`,
           "Accept": "application/json"
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch Summary KPIs Dashboard Module Data
   const fetchDashboardData = async () => {
     try {
-      const response = await fetch("https://mama-check.onrender.com/api/v1/chew/dashboard", {
+      const response = await fetch("https://mamacheck26.onrender.com/api/v1/chew/dashboard", {
         headers: { 
           "Authorization": `Bearer ${TOKEN}`,
           "Accept": "application/json"
@@ -335,10 +335,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+
+
   // Fetch Pregnancies assigned to the logged-in CHEW ID
   const fetchChewPregnancies = async (chewId) => {
     try {
-      const response = await fetch(`https://mama-check.onrender.com/api/v1/pregnancies/chew/${chewId}`, {
+      const response = await fetch(`They should use the documentation sent earlier, cause other part of the URL is there to complete this one sent. Example https://mamacheck26.onrender.com/api/v1/pregnancies/chew/${chewId}`, {
         headers: { 
           "Authorization": `Bearer ${TOKEN}`,
           "Accept": "application/json"

@@ -63,7 +63,7 @@ verifyBtn.addEventListener("click", async () => {
         verifyBtn.textContent = "Verifying OTP...";
 
         // Step A: Verify OTP via Auth endpoint
-        const verifyResponse = await fetch("https://mama-check.onrender.com/api/v1/auth/verify-otp", {
+        const verifyResponse = await fetch("https://mamacheck26.onrender.com/api/v1/auth/verify-otp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -71,6 +71,8 @@ verifyBtn.addEventListener("click", async () => {
                 otp: otp
             })
         });
+
+
 
         let verifyData = await verifyResponse.json().catch(() => ({
             message: "Unable to read verification response."
@@ -83,7 +85,7 @@ verifyBtn.addEventListener("click", async () => {
 
         // Step B: Proceed to register pregnancy if OTP is valid
         verifyBtn.textContent = "Completing Registration...";
-        const registerResponse = await fetch("https://mama-check.onrender.com/api/v1/pregnancies/register", {
+        const registerResponse = await fetch("https://mamacheck26.onrender.com/api/v1/pregnancies/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(registrationData)
@@ -120,7 +122,7 @@ resendBtn.addEventListener("click", async () => {
         resendBtn.disabled = true;
         resendBtn.textContent = "Sending...";
 
-        const response = await fetch("https://mama-check.onrender.com/api/v1/auth/request-otp", {
+        const response = await fetch("https://mamacheck26.onrender.com/api/v1/auth/request-otp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ phone: registrationData.phone })
