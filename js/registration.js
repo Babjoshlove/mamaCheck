@@ -45,7 +45,10 @@ const form = document.getElementById("registrationForm");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const fullName = document.getElementById("fullname").value.trim();
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastNamee").value.trim();
+
+// Now use this 'fullName' variable for your registrationData object
     const phone = document.getElementById("phone").value.trim();
     const address = document.getElementById("address").value.trim();
     const lga = document.getElementById("lga").value.trim();
