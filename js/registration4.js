@@ -193,7 +193,7 @@ verifyBtn.addEventListener("click", async () => {
 
         const finalPayload = { ...registrationData, otp: otp };
 
-        const response = await fetch("https://mama-check23.onrender.com/api/v1/pregnancies/register", {
+        const response = await fetch("https://mama-check23.onrender.com/api/v1/auth/request-otp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(finalPayload) 
