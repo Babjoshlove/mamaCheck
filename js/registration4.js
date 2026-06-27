@@ -159,27 +159,54 @@
 // });
 
 verifyBtn.addEventListener("click", async () => {
+    // 1. Get the OTP from your input fields
+    const otp = [...otpInputs].map(input => input.value.trim()).join("");
+    
+    // 2. Validate OTP length
+    if (otp.length !== 6) {
+        alert("Please enter the full 6-digit OTP.");
+        return;
+    }
+
+    // 3. Get your stored registration data
     const registrationData = JSON.parse(localStorage.getItem("registrationData"));
+    if (!registrationData) {
+        alert("Registration data lost. Please restart.");
+        return;
+    }
 
     try {
         verifyBtn.disabled = true;
-        // FINAL REGISTRATION CALL - Matching Swagger Exactly
+        verifyBtn.textContent = "Verifying...";
+
+        // 4. Combine the OTP with the existing registration data
+        const finalPayload = {
+            ...registrationData,
+            otp: otp
+        };
+
+        // 5. Send to your registration endpoint
         const response = await fetch("https://mama-check23.onrender.com/api/v1/pregnancies/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(registrationData) // Matches your schema
+            body: JSON.stringify(finalPayload) 
         });
+
+        const result = await response.json().catch(() => ({}));
 
         if (response.ok) {
             alert("Registration successful!");
+            localStorage.removeItem("registrationData"); // Clean up
             window.location.replace("overview.html");
         } else {
-            const err = await response.json();
-            alert(err.message || "Registration failed.");
+            // This will show you exactly why the server rejected it
+            alert(result.message || "Registration failed. Please check your OTP.");
         }
     } catch (error) {
-        alert("Network error.");
+        console.error("Registration Error:", error);
+        alert("Network error. Please check your connection.");
     } finally {
         verifyBtn.disabled = false;
+        verifyBtn.textContent = "Verify Number";
     }
 });

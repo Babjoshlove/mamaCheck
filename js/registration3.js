@@ -47,9 +47,35 @@
 //     window.location.href = "registration4.html";
 // });
 
+const form = document.getElementById("registration-form3");
+const skipBtn = document.querySelector(".skip-btn");
+
+// Function to trigger OTP and move to step 4
+async function triggerOtpAndProceed(registrationData) {
+    try {
+        const response = await fetch("https://mama-check23.onrender.com/api/v1/auth/request-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone: registrationData.phone })
+        });
+
+        if (response.ok) {
+            window.location.href = "registration4.html";
+        } else {
+            alert("Failed to send OTP. Please try again.");
+        }
+    } catch (err) {
+        alert("Network error. Please check your connection.");
+    }
+}
+
+// Handle Form Submission (Continue button)
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     let data = JSON.parse(localStorage.getItem("registrationData"));
+    
+    // Update data with form inputs
     data.trustedContactName = document.getElementById("trustedContactName").value.trim();
     data.trustedContactPhone = document.getElementById("trustedContactPhone").value.trim();
     data.trustedContactRelationship = document.getElementById("relationship").value;
@@ -57,14 +83,12 @@ form.addEventListener("submit", async (e) => {
     
     localStorage.setItem("registrationData", JSON.stringify(data));
 
-    // TRIGGER OTP HERE BEFORE MOVING TO STEP 4
-    try {
-        const response = await fetch("https://mama-check23.onrender.com/api/v1/auth/request-otp", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phone: data.phone })
-        });
-        if (response.ok) window.location.href = "registration4.html";
-        else alert("Failed to send OTP.");
-    } catch (err) { alert("Network error."); }
+    await triggerOtpAndProceed(data);
+});
+
+// Handle Skip Button
+skipBtn.addEventListener("click", async () => {
+    let data = JSON.parse(localStorage.getItem("registrationData"));
+    // Even if skipping, we ensure they trigger the OTP request
+    await triggerOtpAndProceed(data);
 });
