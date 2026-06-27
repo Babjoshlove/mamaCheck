@@ -63,7 +63,7 @@ verifyBtn.addEventListener("click", async () => {
         verifyBtn.textContent = "Verifying OTP...";
 
         // Step A: Verify OTP via Auth endpoint
-        const verifyResponse = await fetch("https://mama-check23.onrender.com/api/v1/auth/verify-otp", {
+        const verifyResponse = await fetch("https://mama-check23.onrender.com/api/v1/pregnancies/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -72,7 +72,7 @@ verifyBtn.addEventListener("click", async () => {
             })
         });
 
-
+/api/v1/pregnancies/register
 
         let verifyData = await verifyResponse.json().catch(() => ({
             message: "Unable to read verification response."
