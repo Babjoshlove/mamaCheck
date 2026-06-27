@@ -50,8 +50,16 @@
 const form = document.getElementById("registration-form3");
 const skipBtn = document.querySelector(".skip-btn");
 
-// Function to trigger OTP and move to step 4
+// Single, complete function
 async function triggerOtpAndProceed(registrationData) {
+    // 1. Safety Check
+    if (!registrationData || !registrationData.phone) {
+        alert("Session expired. Please restart registration.");
+        window.location.href = "registration.html";
+        return;
+    }
+
+    // 2. Trigger OTP Request
     try {
         const response = await fetch("https://mama-check23.onrender.com/api/v1/auth/request-otp", {
             method: "POST",
@@ -60,20 +68,22 @@ async function triggerOtpAndProceed(registrationData) {
         });
 
         if (response.ok) {
+            // Move to registration 4 where OTP input exists
             window.location.href = "registration4.html";
         } else {
             alert("Failed to send OTP. Please try again.");
         }
     } catch (err) {
+        console.error(err);
         alert("Network error. Please check your connection.");
     }
 }
 
-// Handle Form Submission (Continue button)
+// Handle Form Submission (Continue)
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    let data = JSON.parse(localStorage.getItem("registrationData"));
+    let data = JSON.parse(localStorage.getItem("registrationData")) || {};
     
     // Update data with form inputs
     data.trustedContactName = document.getElementById("trustedContactName").value.trim();
@@ -89,15 +99,5 @@ form.addEventListener("submit", async (e) => {
 // Handle Skip Button
 skipBtn.addEventListener("click", async () => {
     let data = JSON.parse(localStorage.getItem("registrationData"));
-    // Even if skipping, we ensure they trigger the OTP request
     await triggerOtpAndProceed(data);
 });
-async function triggerOtpAndProceed(registrationData) {
-    // Safety Check: If data or phone is missing, force user back to start
-    if (!registrationData || !registrationData.phone) {
-        alert("Session expired. Please restart registration.");
-        window.location.href = "registration.html";
-        return;
-    }
-    // ... rest of your fetch logic
-}
