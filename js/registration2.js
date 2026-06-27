@@ -37,28 +37,32 @@
 //     window.location.href = "registration3.html";
 // });
 
+// Ensure this matches the ID in your HTML <form id="registration-form2">
+const form = document.getElementById("registration-form2");
 
 form.addEventListener("submit", (e) => {
+    // 1. Prevent the page from refreshing
     e.preventDefault();
 
+    // 2. Get the values from the inputs
     const lmp = document.getElementById("lmp").value;
     const clinicName = document.getElementById("clinicName").value;
     const assignedChew = document.getElementById("assignedChew").value;
 
+    // 3. Simple validation (if you want to force these fields)
     if (!lmp || !clinicName || !assignedChew) {
-        alert("Please complete all required fields (LMP, Clinic, and Assigned Nurse).");
+        alert("Please complete all required fields.");
         return;
     }
 
-    // 1. Save data to localStorage first
+    // 4. Save data to localStorage
     const registrationData = JSON.parse(localStorage.getItem("registrationData")) || {};
     registrationData.lmp = lmp;
     registrationData.clinicName = clinicName;
     registrationData.assignedChew = assignedChew;
+    
     localStorage.setItem("registrationData", JSON.stringify(registrationData));
 
-    // 2. THIS IS WHAT MOVES YOU TO THE NEXT PAGE
+    // 5. Move to the next page
     window.location.href = "registration3.html"; 
 });
-
-  
