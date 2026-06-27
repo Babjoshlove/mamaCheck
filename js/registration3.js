@@ -61,7 +61,7 @@ async function triggerOtpAndProceed(registrationData) {
 
     // 2. Trigger OTP Request
     try {
-        const response = await fetch("https://mama-check23.onrender.com/api/v1/auth/request-otp", {
+        const response = await fetch("https://mama-check23.onrender.com/api/v1/pregnancies/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ phone: registrationData.phone })
