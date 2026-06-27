@@ -92,3 +92,12 @@ skipBtn.addEventListener("click", async () => {
     // Even if skipping, we ensure they trigger the OTP request
     await triggerOtpAndProceed(data);
 });
+async function triggerOtpAndProceed(registrationData) {
+    // Safety Check: If data or phone is missing, force user back to start
+    if (!registrationData || !registrationData.phone) {
+        alert("Session expired. Please restart registration.");
+        window.location.href = "registration.html";
+        return;
+    }
+    // ... rest of your fetch logic
+}

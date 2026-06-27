@@ -45,13 +45,20 @@ form.addEventListener("submit", (e) => {
     const clinicName = document.getElementById("clinicName").value;
     const assignedChew = document.getElementById("assignedChew").value;
 
-    // Manual validation: Check if fields are empty
     if (!lmp || !clinicName || !assignedChew) {
         alert("Please complete all required fields (LMP, Clinic, and Assigned Nurse).");
         return;
     }
 
-    // ... rest of your storage logic
+    // 1. Save data to localStorage first
+    const registrationData = JSON.parse(localStorage.getItem("registrationData")) || {};
+    registrationData.lmp = lmp;
+    registrationData.clinicName = clinicName;
+    registrationData.assignedChew = assignedChew;
+    localStorage.setItem("registrationData", JSON.stringify(registrationData));
+
+    // 2. THIS IS WHAT MOVES YOU TO THE NEXT PAGE
+    window.location.href = "registration3.html"; 
 });
 
   
