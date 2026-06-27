@@ -159,9 +159,36 @@ const verifyBtn = document.querySelector(".verify-btn");
 const resendBtn = document.querySelector(".resend-btn");
 const otpInputs = document.querySelectorAll(".otp-input");
 
+// Target the span we just created to display the phone number
+const displayPhoneSpan = document.getElementById("display-phone"); 
+
 let countdownInterval;
 
-// --- 1. Automatic Input Focus Handling ---
+// --- 1. Get Data from Step 1 & Initialize Page ---
+function getRegistrationData() {
+    // This fetches the object you saved in Step 1
+    const registrationData = JSON.parse(localStorage.getItem("registrationData"));
+    
+    if (!registrationData || !registrationData.phone) {
+        alert("Registration details missing. Please restart registration.");
+        window.location.href = "registration.html";
+        return null;
+    }
+    return registrationData;
+}
+
+// Automatically display the phone number when Step 4 loads
+document.addEventListener("DOMContentLoaded", () => {
+    const registrationData = getRegistrationData();
+    
+    // If the data exists and we found the HTML element, inject the phone number
+    if (registrationData && displayPhoneSpan) {
+        // Targets the 'phone' constant saved in Step 1
+        displayPhoneSpan.textContent = registrationData.phone; 
+    }
+});
+
+// --- 2. Automatic Input Focus Handling ---
 otpInputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         if (input.value.length === 1 && index < otpInputs.length - 1) {
@@ -169,7 +196,7 @@ otpInputs.forEach((input, index) => {
         }
     });
 
-    // Optional: Handle backspace to move focus backward
+    // Handle backspace to move focus backward
     input.addEventListener("keydown", (e) => {
         if (e.key === "Backspace" && input.value.length === 0 && index > 0) {
             otpInputs[index - 1].focus();
@@ -177,16 +204,7 @@ otpInputs.forEach((input, index) => {
     });
 });
 
-// --- 2. Helper Functions ---
-function getRegistrationData() {
-    const registrationData = JSON.parse(localStorage.getItem("registrationData"));
-    if (!registrationData || !registrationData.phone) {
-        alert("Registration details missing. Please restart registration.");
-        return null;
-    }
-    return registrationData;
-}
-
+// --- 3. Helper Functions ---
 function startResendCooldown(durationInSeconds) {
     let timeLeft = durationInSeconds;
     resendBtn.disabled = true;
@@ -203,7 +221,7 @@ function startResendCooldown(durationInSeconds) {
     }, 1000);
 }
 
-// --- 3. Verify OTP & Submit Registration ---
+// --- 4. Verify OTP & Submit Registration ---
 verifyBtn.addEventListener("click", async () => {
     const otp = [...otpInputs].map(input => input.value.trim()).join("");
     if (otp.length !== 6) {
@@ -216,37 +234,19 @@ verifyBtn.addEventListener("click", async () => {
 
     try {
         verifyBtn.disabled = true;
-        verifyBtn.textContent = "Verifying OTP...";
+        verifyBtn.textContent = "Verifying & Registering...";
 
-        // Step A: Verify OTP via Auth endpoint
-        // NOTE: I updated this URL to point to a logical auth endpoint. 
-        // Update this to match your actual backend route!
-        const verifyResponse = await fetch("https://mama-check23.onrender.com/api/v1/auth/verify-otp", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                phone: registrationData.phone,
-                otp: otp
-            })
-        });
+        // Combine the registration data from previous steps with the OTP
+        const finalPayload = {
+            ...registrationData,
+            otp: otp
+        };
 
-        // The stray text was removed from here
-
-        let verifyData = await verifyResponse.json().catch(() => ({
-            message: "Unable to read verification response."
-        }));
-
-        if (!verifyResponse.ok) {
-            alert(verifyData.message || "OTP verification failed.");
-            return; // Stop execution if OTP is invalid
-        }
-
-        // Step B: Proceed to register pregnancy if OTP is valid
-        verifyBtn.textContent = "Completing Registration...";
+        // Make a SINGLE request to the register endpoint
         const registerResponse = await fetch("https://mama-check23.onrender.com/api/v1/pregnancies/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(registrationData)
+            body: JSON.stringify(finalPayload)
         });
 
         let registerData = await registerResponse.json().catch(() => ({
@@ -256,14 +256,14 @@ verifyBtn.addEventListener("click", async () => {
         if (registerResponse.ok) {
             alert("Registration successful!");
             localStorage.setItem("registeredMother", JSON.stringify(registerData));
-            localStorage.removeItem("registrationData");
+            localStorage.removeItem("registrationData"); // Clear the temp data now that it's submitted
             window.location.replace("overview.html");
         } else {
-            alert(registerData.message || "Registration failed.");
+            alert(registerData.message || "Registration failed. Please check your OTP and try again.");
         }
 
     } catch (error) {
-        console.error("Verification/Registration Error:", error);
+        console.error("Registration Error:", error);
         alert("Network error. Please check your connection and try again.");
     } finally {
         verifyBtn.disabled = false;
@@ -271,7 +271,7 @@ verifyBtn.addEventListener("click", async () => {
     }
 });
 
-// --- 4. Resend OTP Logic ---
+// --- 5. Resend OTP Logic ---
 resendBtn.addEventListener("click", async () => {
     const registrationData = getRegistrationData();
     if (!registrationData) return;
@@ -283,7 +283,8 @@ resendBtn.addEventListener("click", async () => {
         const response = await fetch("https://mama-check23.onrender.com/api/v1/auth/request-otp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phone: registrationData.phone })
+            // Uses the same phone number targeted from step 1
+            body: JSON.stringify({ phone: registrationData.phone }) 
         });
 
         let data = await response.json().catch(() => ({
