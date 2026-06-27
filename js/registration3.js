@@ -61,7 +61,7 @@ async function triggerOtpAndProceed(registrationData) {
     try {
         // IMPORTANT: Ensure phone format matches what your API expects 
         // If your API needs +234, ensure registrationData.phone includes it
-        const response = await fetch("https://mama-check23.onrender.com/api/v1/auth/request-otp", {
+        const response = await fetch("https://mama-check23.onrender.com/api/v1/pregnancies/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ phone: registrationData.phone })
