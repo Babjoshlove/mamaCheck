@@ -37,15 +37,21 @@
 //     window.location.href = "registration3.html";
 // });
 
+
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    let data = JSON.parse(localStorage.getItem("registrationData"));
-    data.lmp = document.getElementById("lmp").value;
-    data.clinicName = document.getElementById("clinicName").value;
-    // Note: 'assignedChew' is not in your Swagger schema, exclude it or add to schema
-    localStorage.setItem("registrationData", JSON.stringify(data));
-    window.location.href = "registration3.html";
-});
 
+    const lmp = document.getElementById("lmp").value;
+    const clinicName = document.getElementById("clinicName").value;
+    const assignedChew = document.getElementById("assignedChew").value;
+
+    // Manual validation: Check if fields are empty
+    if (!lmp || !clinicName || !assignedChew) {
+        alert("Please complete all required fields (LMP, Clinic, and Assigned Nurse).");
+        return;
+    }
+
+    // ... rest of your storage logic
+});
 
   
