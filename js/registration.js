@@ -42,16 +42,27 @@
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    
+    const fullNameValue = document.getElementById("fullname").value.trim();
+    const names = fullNameValue.split(/\s+/); // Splits by one or more spaces
+    
     const registrationData = {
-        firstName: document.getElementById("fullname").value.trim().split(" ")[0],
-        lastName: document.getElementById("fullname").value.trim().split(" ").slice(1).join(" ") || "",
+        firstName: names[0] || "",
+        lastName: names.length > 1 ? names.slice(1).join(" ") : "",
         phone: document.getElementById("phone").value.trim(),
-        password: document.getElementById("password").value, // Add this input
+        password: document.getElementById("password").value,
         residentialAddress: document.getElementById("address").value.trim(),
         lga: document.getElementById("lga").value.trim(),
-        state: document.getElementById("state").value.trim(), // Add this input
+        state: document.getElementById("state").value.trim(),
         preferredLanguage: document.getElementById("language").value.toLowerCase()
     };
+
+    // Simple validation check
+    if (!registrationData.firstName || !registrationData.phone) {
+        alert("Please provide at least a first name and a phone number.");
+        return;
+    }
+
     localStorage.setItem("registrationData", JSON.stringify(registrationData));
     window.location.href = "registration2.html";
 });
