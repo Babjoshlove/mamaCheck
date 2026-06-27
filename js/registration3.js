@@ -50,42 +50,43 @@
 const form = document.getElementById("registration-form3");
 const skipBtn = document.querySelector(".skip-btn");
 
-// Single, complete function
+// Centralized OTP trigger function
 async function triggerOtpAndProceed(registrationData) {
-    // 1. Safety Check
     if (!registrationData || !registrationData.phone) {
         alert("Session expired. Please restart registration.");
         window.location.href = "registration.html";
         return;
     }
 
-    // 2. Trigger OTP Request
     try {
-        const response = await fetch("https://mama-check23.onrender.com/api/v1/pregnancies/register", {
+        // IMPORTANT: Ensure phone format matches what your API expects 
+        // If your API needs +234, ensure registrationData.phone includes it
+        const response = await fetch("https://mama-check23.onrender.com/api/v1/auth/request-otp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ phone: registrationData.phone })
         });
 
         if (response.ok) {
-            // Move to registration 4 where OTP input exists
             window.location.href = "registration4.html";
         } else {
-            alert("Failed to send OTP. Please try again.");
+            const errorData = await response.json().catch(() => ({}));
+            console.error("Server Error:", errorData);
+            alert("Failed to send OTP: " + (errorData.message || "Please check your network."));
         }
     } catch (err) {
-        console.error(err);
-        alert("Network error. Please check your connection.");
+        console.error("Network Error:", err);
+        alert("Network error. Please check your internet connection.");
     }
 }
 
-// Handle Form Submission (Continue)
-form.addEventListener("submit", async (e) => {
+// Handle Form Submission
+form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     let data = JSON.parse(localStorage.getItem("registrationData")) || {};
     
-    // Update data with form inputs
+    // Grab values from inputs
     data.trustedContactName = document.getElementById("trustedContactName").value.trim();
     data.trustedContactPhone = document.getElementById("trustedContactPhone").value.trim();
     data.trustedContactRelationship = document.getElementById("relationship").value;
@@ -93,11 +94,11 @@ form.addEventListener("submit", async (e) => {
     
     localStorage.setItem("registrationData", JSON.stringify(data));
 
-    await triggerOtpAndProceed(data);
+    triggerOtpAndProceed(data);
 });
 
-// Handle Skip Button
-skipBtn.addEventListener("click", async () => {
+// Handle Skip
+skipBtn.addEventListener("click", () => {
     let data = JSON.parse(localStorage.getItem("registrationData"));
-    await triggerOtpAndProceed(data);
+    triggerOtpAndProceed(data);
 });
