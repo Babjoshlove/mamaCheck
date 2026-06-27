@@ -158,20 +158,32 @@
 //     }
 // });
 
+// --- DOM Elements ---
+const verifyBtn = document.querySelector(".verify-btn");
+const otpInputs = document.querySelectorAll(".otp-input");
+
+// --- 1. Auto-focus Logic ---
+otpInputs.forEach((input, index) => {
+    input.addEventListener("input", (e) => {
+        if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
+        }
+    });
+});
+
+// --- 2. Verify Button Event Listener ---
 verifyBtn.addEventListener("click", async () => {
-    // 1. Get the OTP from your input fields
     const otp = [...otpInputs].map(input => input.value.trim()).join("");
     
-    // 2. Validate OTP length
     if (otp.length !== 6) {
         alert("Please enter the full 6-digit OTP.");
         return;
     }
 
-    // 3. Get your stored registration data
     const registrationData = JSON.parse(localStorage.getItem("registrationData"));
     if (!registrationData) {
-        alert("Registration data lost. Please restart.");
+        alert("Registration data lost. Please restart the process.");
+        window.location.href = "registration.html";
         return;
     }
 
@@ -179,13 +191,8 @@ verifyBtn.addEventListener("click", async () => {
         verifyBtn.disabled = true;
         verifyBtn.textContent = "Verifying...";
 
-        // 4. Combine the OTP with the existing registration data
-        const finalPayload = {
-            ...registrationData,
-            otp: otp
-        };
+        const finalPayload = { ...registrationData, otp: otp };
 
-        // 5. Send to your registration endpoint
         const response = await fetch("https://mama-check23.onrender.com/api/v1/pregnancies/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -196,10 +203,12 @@ verifyBtn.addEventListener("click", async () => {
 
         if (response.ok) {
             alert("Registration successful!");
-            localStorage.removeItem("registrationData"); // Clean up
-            window.location.replace("overview.html");
+            localStorage.removeItem("registrationData");
+            
+            // NAVIGATION: Ensure overview.html is in the same directory
+            console.log("Redirecting to overview.html...");
+            window.location.replace("overview.html"); 
         } else {
-            // This will show you exactly why the server rejected it
             alert(result.message || "Registration failed. Please check your OTP.");
         }
     } catch (error) {
